@@ -3,6 +3,8 @@ package rooms
 	import flash.net.LocalConnection;
 	import game.*;
 	import game.beach.Beach;
+	import game.jungle.Jungle;
+	import game.jungle.StartingScene;
 	import game.plains.Plains;
 	import game.snow.Snow;
 	import net.flashpunk.Entity;
@@ -76,8 +78,9 @@ package rooms
 			height = 200;		
 		
 			// Set location
-			location = FP.choose(new Desert, new Forest, new Snow, new Plains, new Beach);	
-			//location = new Desert;
+			//location = FP.choose(new Desert, new Forest, new Snow, new Plains, new Beach);	
+			location = new Jungle;
+			//add(new StartingScene);
 			add(location);
 			changeLocationAlarm = new MyAlarm(CHANGE_LOCATION_TIME, changeLocationChance);
 			addTween(changeLocationAlarm);
@@ -95,7 +98,14 @@ package rooms
 			add(new MountainController);
 			
 			// Night-day cycle
-			add(new Day(this, false));
+			//add(new Day(this, false));
+			add(new Night(this, false));
+			//var night:Night;
+			//add(night = new Night(this));
+			//night.image.alpha = 1;
+			
+			// Time counter
+			add(Global.timeCounter = new TimeCounter);
 			
 			
 			// Player
@@ -113,6 +123,7 @@ package rooms
 		
 		override public function begin():void
 		{
+//			advanceTime();
 //			music.loop();
 		}
 		
@@ -159,6 +170,14 @@ package rooms
 				fourthFrame += 1;
 			}
 			
+			// Time to swtich out of jungle?
+			if (Global.stillInJungle && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE)
+			{
+				trace('change out of jungle');
+				changeLocation();
+				Global.stillInJungle = false;
+			}
+			
 		}		
 		
 		//public function changeWalkingSpeed(newSpeed:Number):void
@@ -170,16 +189,19 @@ package rooms
 		/**
 		 * Change location now.
 		 */
-		public function changeLocation():void
+		public function changeLocation(newLocation:Location = null):void
 		{
 			//trace('Changing location');
-			var newLocation:Location;
-			do 
+			if (newLocation == null)
 			{
-				newLocation = FP.choose(new Forest, new Desert, new Plains, new Snow, new Beach);
-				//newLocation = FP.choose(new Forest, new Beach);
-			} 
-			while (newLocation.type == this.location.type);
+				var newLocation:Location;
+				do 
+				{
+					newLocation = FP.choose(new Forest, new Desert, new Plains, new Snow, new Beach);
+					//newLocation = FP.choose(new Forest, new Beach);
+				} 
+				while (newLocation.type == this.location.type);
+			}
 			if (soundController)
 				soundController.changeLocation(newLocation);
 			remove(location);
@@ -197,6 +219,13 @@ package rooms
 			//trace('change location chance');
 			//trace('Slope: ' + location.creationTimeSlope);
 			changeLocationAlarm.reset(CHANGE_LOCATION_TIME);
+			
+			if (location.type == 'jungle')
+			{
+				trace('too early to change out of jungle');
+				return;
+			}
+			
 			switch (location.creationTimeSlope)
 			{
 				case 1:

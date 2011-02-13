@@ -1,11 +1,13 @@
 package game 
 {
 	import net.flashpunk.Entity;
+	import net.flashpunk.graphics.Backdrop;
 	import net.flashpunk.graphics.Image
 	import flash.display.BlendMode;
 	import net.flashpunk.FP;
 	import net.flashpunk.tweens.misc.ColorTween;
 	import net.flashpunk.tweens.misc.Alarm;
+	import net.flashpunk.World;
 	import rooms.MyWorld;
 
 	public class Sunset extends Entity
@@ -25,15 +27,17 @@ package game
 		 * Image
 		 */
 		[Embed(source = '../../assets/sunset_cover.png')] private const SPRITE:Class;	
-		public var image:Image = new Image(SPRITE);		
+		public var image:Backdrop = new Backdrop(SPRITE);	
+		//public var image:Image = new Image(SPRITE);		
 		
 		public function Sunset() 
 		{
-			(FP.world as MyWorld).time = 'sunset';
 			layer = -999;
 			image.blend = BlendMode.MULTIPLY;
 			image.alpha = 0;
-			graphic = image;		
+			graphic = image;	
+			graphic.scrollX = 0;
+			graphic.scrollY = 0;			
 			if ((FP.world as MyWorld).soundController)
 				(FP.world as MyWorld).soundController.startNight();
 		}
@@ -49,7 +53,7 @@ package game
 		override public function update():void
 		{
 			super.update();
-			(graphic as Image).alpha = fadeTween.alpha;
+			(graphic as Backdrop).alpha = fadeTween.alpha;
 		}
 		
 		public function fadeIn():void

@@ -11,6 +11,7 @@ package game
 	public class Stars extends Entity
 	{	
 		public var fadeTween:ColorTween;
+		public var shouldFadeIn:Boolean;
 		
 		public var startedFadeOut:Boolean = false;
 		public var releasedMeteorShower:Boolean = false;
@@ -27,16 +28,27 @@ package game
 		[Embed(source='../../assets/stars.png')] private const SPRITE:Class;
 		public var image:Image = new Image(SPRITE);	
 		
-		public function Stars() 
+		public function Stars(shouldFadeIn:Boolean = true) 
 		{
-			image.alpha = 0;
+			this.shouldFadeIn = shouldFadeIn;
 			graphic = image;
 			layer = 500;
+			if (shouldFadeIn)
+				image.alpha = 0;
+			else
+				image.alpha = 1;
 		}
 		
 		override public function added():void
 		{
-			fadeIn();
+			if (shouldFadeIn)
+				fadeIn();
+			else
+			{
+				fadeTween = new ColorTween();
+				addTween(fadeTween);		
+			//	fadeTween.tween(Night.FADE_IN_DURATION, Colors.WHITE, Colors.WHITE, 0, 1);				
+			}
 			
 			// Shooting star alarm
 			shootingStarAlarm = new Alarm(SHOOTING_STAR_FREQ, releaseShootingStar);

@@ -17,7 +17,7 @@
 			FP.screen.color = Colors.WHITE;
 			
 			// Console for debugging
-			//FP.console.enable();					
+			FP.console.enable();					
 			
 			FP.world = new MyWorld;
 			Mouse.hide();

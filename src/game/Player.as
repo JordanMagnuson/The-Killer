@@ -128,7 +128,7 @@ package game
 				spritemap.play("stand");
 			}
 			
-			if (Input.released("X") && Global.farEnough)
+			if (Input.released("X") && !Global.stillInJungle)
 			{
 				FP.world.add(Global.playerShooting = new PlayerShooting);
 				Global.playerShooting.x = x;

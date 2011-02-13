@@ -6,6 +6,7 @@ package game
 	import net.flashpunk.tweens.misc.Alarm;
 	import net.flashpunk.utils.Input;
 	import rooms.MyWorld;
+	import net.flashpunk.Sfx;
 	
 	/**
 	 * ...
@@ -18,11 +19,17 @@ package game
 		
 		public var kneelAlarm:Alarm;
 		
+		public var playMusicAlarm:Alarm = new Alarm(0.00001, playMusic);
+		
+		public var killVictimAlarm:Alarm = new Alarm(0.00001, killVictim);
+		
 		/**
 		 * Player graphic
 		 */
 		[Embed(source='../../assets/killer_no_gun.png')] private const SPRITE:Class;
 		public var image:Image = new Image(SPRITE);
+		
+		public var gunshot:Sfx = new Sfx(Assets.GUNSHOT);		
 		
 		public function PlayerShooting() 
 		{
@@ -45,6 +52,8 @@ package game
 			FP.world.add(new Gun);
 			FP.world.add(Global.crossHair = new Crosshair);
 			addTween(kneelAlarm, true);
+			addTween(playMusicAlarm);
+			addTween(killVictimAlarm);
 		}
 		
 		override public function update():void
@@ -52,6 +61,7 @@ package game
 			if (Input.mousePressed && !Global.shotFired)
 			{
 				Global.shotFired = true;
+				gunshot.play();
 				
 				// Stop sounds
 				Global.playSounds = false;
@@ -59,19 +69,15 @@ package game
 				FP.world.remove((FP.world as MyWorld).soundController);		
 				
 				// Play music
-				(FP.world as MyWorld).musicEnd.play();
+				playMusicAlarm.start();
+				
+				killVictimAlarm.start();
 				
 				// get rid of crosshairs
 				FP.world.remove(Global.crossHair);
 				
 				// Slow everything down (clouds)
-				FP.rate = 0.2;
-				
-				// Kill victim
-				FP.world.add(Global.deadVictim = new DeadVictim);
-				Global.deadVictim.x = Global.victim.x;
-				Global.deadVictim.y = Global.victim.y;
-				FP.world.remove(Global.victim);
+				FP.rate = 0.4;
 			}
 			super.update();
 		}
@@ -79,6 +85,21 @@ package game
 		public function makeVictimKneel():void
 		{
 			Global.victim.kneel();
+		}
+		
+		public function playMusic():void
+		{
+			(FP.world as MyWorld).musicEnd.play();			
+		}
+		
+		public function killVictim():void
+		{
+			// Kill victim
+			FP.world.add(Global.deadVictim = new DeadVictim);
+			FP.world.add(Global.deadUnderground = new DeadUnderground);
+			Global.deadVictim.x = Global.victim.x;
+			Global.deadVictim.y = Global.victim.y;
+			FP.world.remove(Global.victim);					
 		}
 		
 	}

@@ -1,7 +1,9 @@
 package game 
 {
+	import flash.geom.Rectangle;
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Spritemap;
+	import net.flashpunk.FP;
 	
 	/**
 	 * ...
@@ -9,6 +11,9 @@ package game
 	 */
 	public class DeadVictim extends Entity
 	{
+		
+		public const MAX_FALL_SPEED:Number = 1;
+		public var fallSpeed:Number = 0.2;
 		
 		/**
 		 * Player graphic
@@ -18,21 +23,39 @@ package game
 		
 		public function DeadVictim() 
 		{
-			spritemap.add("die", [0, 1, 2, 3, 4, 5], 2, false);
+			spritemap.add("die", [0, 1, 2, 3], 2, false);
 			graphic = spritemap;
 			
 			// Hit box
-			spritemap.originX = 0;
-			spritemap.originY = spritemap.height;
+			spritemap.originX = 10;
+			spritemap.originY = spritemap.height - 5;
 			spritemap.x = 0;
-			spritemap.y = -spritemap.originY;	
+			spritemap.y = -spritemap.originY - 5;	
 			
-			setHitbox(spritemap.width, spritemap.height, spritemap.originX, spritemap.originY);					
+			setHitbox(spritemap.width, spritemap.height, spritemap.originX, spritemap.originY);		
+			
+			FP.world.add(Global.view = new View(this, new Rectangle(0, 0, FP.width, 1200), 1));
 		}
 		
 		override public function added():void
 		{
 			spritemap.play('die');
+		}
+		
+		override public function update():void
+		{
+			spritemap.angle -= 1 * FP.rate;		
+			y += 0.5 * FP.rate;
+			
+			//if (fallSpeed < MAX_FALL_SPEED)
+			//{
+				//fallSpeed += 0.001;
+			//}
+			trace(fallSpeed);
+			//if (spritemap.index == 1 || spritemap.complete)
+			//{
+				//y += 0.5;
+			//}
 		}
 		
 	}

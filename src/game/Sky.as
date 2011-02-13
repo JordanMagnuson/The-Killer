@@ -4,6 +4,7 @@ package game
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.tweens.misc.Alarm;
+	import rooms.MyWorld;
 	
 	public class Sky extends Entity
 	{	
@@ -58,6 +59,8 @@ package game
 		{
 			//trace('release cloud');
 			cloudAlarm.reset(cloudReleaseTime);
+			//if ((FP.world as MyWorld).location.type == 'jungle')
+				//return;	// No clouds in the jungle, for bleaker look
 			FP.world.add(new Cloud);
 		}
 		

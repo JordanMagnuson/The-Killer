@@ -1,10 +1,13 @@
 package game.beach 
 {
 
+	import flash.geom.Point;
 	import game.*;
 	import game.desert.Cactus;
+	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import game.Player;
+	import net.flashpunk.graphics.Backdrop;
 	import net.flashpunk.tweens.misc.Alarm;
 	import net.flashpunk.World;
 	import net.flashpunk.Sfx;
@@ -14,6 +17,9 @@ package game.beach
 	{		
 		public var creationNumber:Number;
 		public var waves:Waves;
+		
+		//public var waterCover:Backdrop = new Backdrop(Assets.WATER_COVER, false, false);
+		//public var waterCover:WaterCover = new WaterCover;
 		
 		/**
 		 * Sound
@@ -43,10 +49,12 @@ package game.beach
 		override public function added():void
 		{
 			FP.world.add(waves);
+			//FP.world.add(waterCover);
 		}
 		
 		override public function update():void
 		{
+			//waterCover.backdrop.alpha = waves.image.alpha;
 			super.update();
 		}
 		
@@ -129,6 +137,12 @@ package game.beach
 		{
 			super.gameStartItem(world, new SandDune);	
 		}
+		
+		//override public function render():void
+		//{
+			//super.render();
+			//waterCover.render(FP.buffer, new Point(0, FP.height), FP.camera);
+		//}
 		
 	}
 

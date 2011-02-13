@@ -5,6 +5,7 @@ package game
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.tweens.misc.Alarm;
 	import game.MyAlarm;
+	import rooms.MyWorld;
 	
 	/**
 	 * Class that controls how frequently mountains are released.
@@ -54,7 +55,9 @@ package game
 		{
 			//trace('release cloud');
 			mountainAlarm.reset(mountainReleaseTime);
-			FP.world.add(new Mountain);
+			
+			if ((FP.world as MyWorld).location.type != 'jungle')
+				FP.world.add(new Mountain);						// No mountains in jungle
 		}
 		
 		public function changeMountainDensity():void

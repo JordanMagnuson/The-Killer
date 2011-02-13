@@ -22,6 +22,8 @@ package game.beach
 		
 		public var fadeTween:ColorTween;
 		
+		public var waterCover:WaterCover = new WaterCover;
+		
 		/**
 		 * Direction is 1 or -1, makes the wase move back and forth;
 		 */
@@ -54,12 +56,14 @@ package game.beach
 		override public function added():void
 		{
 			fadeIn();
+			FP.world.add(waterCover);
 		}
 		
 		override public function update():void
 		{
 			super.update();
 			(graphic as Image).alpha = fadeTween.alpha;
+			waterCover.backdrop.alpha = fadeTween.alpha;
 			
 			// Move waves
 			x += direction * SPEED * FP.elapsed;
@@ -92,6 +96,7 @@ package game.beach
 		
 		public function destroy():void
 		{
+			FP.world.remove(waterCover);
 			FP.world.remove(this);
 		}
 		

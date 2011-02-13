@@ -20,7 +20,9 @@ package game
 		[Embed(source = '../../assets/plains/mountain01.png')] private const PLAINS_MOUNTAIN01:Class;			
 		[Embed(source = '../../assets/plains/mountain02.png')] private const PLAINS_MOUNTAIN02:Class;	
 		[Embed(source = '../../assets/beach/mountain01.png')] private const BEACH_MOUNTAIN01:Class;			
-		[Embed(source = '../../assets/beach/mountain02.png')] private const BEACH_MOUNTAIN02:Class;			
+		[Embed(source = '../../assets/beach/mountain02.png')] private const BEACH_MOUNTAIN02:Class;		
+		[Embed(source = '../../assets/jungle/mountain01.png')] private const JUNGLE_MOUNTAIN01:Class;			
+		[Embed(source = '../../assets/jungle/mountain02.png')] private const JUNGLE_MOUNTAIN02:Class;				
 		
 		public function Mountain() 
 		{
@@ -41,7 +43,10 @@ package game
 					break;		
 				case 'beach':
 					rawSprite = chooseSprite(new Array(BEACH_MOUNTAIN01, BEACH_MOUNTAIN02));	
-					break;						
+					break;	
+				case 'jungle':
+					rawSprite = chooseSprite(new Array(JUNGLE_MOUNTAIN01, JUNGLE_MOUNTAIN02));	
+					break;					
 				default:
 					rawSprite = chooseSprite(new Array(FOREST_MOUNTAIN01, FOREST_MOUNTAIN02));	
 					break;									
