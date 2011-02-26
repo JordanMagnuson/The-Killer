@@ -12,9 +12,14 @@ package game.jungle
 	{
 		public var creationNumber:Number;
 		
+		/**
+		 * Sound
+		 */
+		[Embed(source='../../../assets/jungle_sounds.swf', symbol='jungle_night_sounds')] private const NIGHT_SOUND:Class;	
+		
 		public function Jungle() 
 		{
-			super(Assets.SILENCE, Assets.SILENCE, 0.6, 0.4);
+			super(NIGHT_SOUND, NIGHT_SOUND, 0.6, 0.4);
 			type = 'jungle';     
 		}
 		

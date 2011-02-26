@@ -57,6 +57,7 @@ package rooms
 		/**
 		 * Title text
 		 */
+		public var textPressAlarm:Alarm = new Alarm(3, showTextPress);
 		public var titleTextAlarm:Alarm;
 		
 		/**
@@ -113,7 +114,8 @@ package rooms
 			add(Global.victim = new Victim);
 			
 			// Starting text
-			add(new textPress);
+			addTween(textPressAlarm, true);
+			//add(new textPress);
 			
 			// Start of game changes
 			location.gameStart(this);
@@ -271,6 +273,12 @@ package rooms
 					add(new Day(this));
 					break;
 			}
+		}
+		
+		public function showTextPress():void
+		{
+			if (!Global.startedWalking)
+				add(new textPress);
 		}
 		
 		public function showTitle():void

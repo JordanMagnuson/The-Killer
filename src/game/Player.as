@@ -128,28 +128,36 @@ package game
 				spritemap.play("stand");
 			}
 			
-			if (Input.released("X") && !Global.stillInJungle)
+			if (Input.released("X"))
 			{
-				FP.world.add(Global.playerShooting = new PlayerShooting);
-				Global.playerShooting.x = x;
-				Global.playerShooting.y = y;
-				FP.world.add((FP.world as MyWorld).soundController = new SoundController((FP.world as MyWorld).location));
-				if ((FP.world as MyWorld).time == 'night')
-					(FP.world as MyWorld).soundController.startNight();
-				(FP.world as MyWorld).music.stop();
-				Global.playSounds = true;
-				FP.world.remove(this);
-				
-				
-				//spritemap.play('push');
-				//graphic = pushing;
-				//pushing.play();
-				//sndWalking.stop();
-				//var playerDying:PlayerDying = new PlayerDying;
-				//FP.world.add(playerDying);
-				//playerDying.x = x;
-				//playerDying.y = y;
-				//FP.world.remove(this);
+				if (Global.stillInJungle)
+				{
+					FP.world.add(new textNotFarEnough);
+				}
+				else
+				{
+					FP.world.add(new textUseMouse);
+					FP.world.add(Global.playerShooting = new PlayerShooting);
+					Global.playerShooting.x = x;
+					Global.playerShooting.y = y;
+					FP.world.add((FP.world as MyWorld).soundController = new SoundController((FP.world as MyWorld).location));
+					if ((FP.world as MyWorld).time == 'night')
+						(FP.world as MyWorld).soundController.startNight();
+					(FP.world as MyWorld).music.stop();
+					Global.playSounds = true;
+					FP.world.remove(this);
+					
+					
+					//spritemap.play('push');
+					//graphic = pushing;
+					//pushing.play();
+					//sndWalking.stop();
+					//var playerDying:PlayerDying = new PlayerDying;
+					//FP.world.add(playerDying);
+					//playerDying.x = x;
+					//playerDying.y = y;
+					//FP.world.remove(this);
+				}
 			}
 		}
 		

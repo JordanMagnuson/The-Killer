@@ -8,7 +8,7 @@ package game
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.tweens.misc.ColorTween;
 	
-	public class textPress extends Entity
+	public class textUseMouse extends Entity
 	{		
 		public static const FADE_IN_DURATION:Number = 3;
 		public static const FADE_OUT_DURATION:Number = 3;
@@ -16,26 +16,26 @@ package game
 		public static var text:Text;
 		public static var fadeTween:ColorTween;
 		
-		public static var nextTextAlarm:Alarm;
+		public var fadeInAlarm:Alarm = new Alarm(3, fadeIn);
+		public var fadeOutAlarm:Alarm = new Alarm(1, fadeOut);		
 		
-		public static var started:Boolean = false;
+		public var started:Boolean = false;
 		
-		public function textPress() 
+		public function textUseMouse() 
 		{
-			text = new Text("Hold space to start walking.");
+			text = new Text("Use the mouse to aim.");
 			text.size = 8;
 			text.alpha = 0;
 			graphic = text;			
 			x = 20;
 			y = 130;
 			fadeTween = new ColorTween();
-			fadeTween.alpha = 1;
-			nextTextAlarm = new Alarm(2, fadeOut);
+			fadeTween.alpha = 0;
 		}	
 		
 		override public function added():void
 		{
-			fadeIn();
+			addTween(fadeInAlarm, true);
 		}
 		
 		override public function update():void
@@ -43,11 +43,11 @@ package game
 			super.update();
 			text.alpha = fadeTween.alpha;
 			
-			if (Global.player.walking && started == false)
+			if (Global.shotFired && !started)
 			{
 				started = true;
-				FP.world.addTween(nextTextAlarm);
-				nextTextAlarm.start();
+				FP.world.addTween(fadeOutAlarm);
+				fadeOutAlarm.start();
 			}
 		}
 		
@@ -58,6 +58,8 @@ package game
 		
 		public function fadeIn():void
 		{
+			if (Global.shotFired)
+				return;
 			fadeTween = new ColorTween();
 			addTween(fadeTween);		
 			fadeTween.tween(FADE_IN_DURATION, Colors.WHITE, Colors.WHITE, 0, 1);
@@ -67,7 +69,7 @@ package game
 		{
 			fadeTween = new ColorTween(destroy);
 			addTween(fadeTween);		
-			fadeTween.tween(FADE_OUT_DURATION, Colors.WHITE, Colors.WHITE, 1, 0);				
+			fadeTween.tween(FADE_OUT_DURATION, Colors.WHITE, Colors.WHITE, text.alpha, 0);				
 		}
 		
 		public function destroy():void

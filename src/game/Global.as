@@ -8,7 +8,7 @@ package game
 	{
 		// Global constants
 		public static const WALKING_SPEED:Number = 100;
-		public static const TIME_IN_JUNGLE:Number = 120;
+		public static const TIME_IN_JUNGLE:Number = 115; // 115
 		
 		// Global variables
 		public static var startedWalking:Boolean = false;
@@ -17,6 +17,7 @@ package game
 		public static var playSounds:Boolean = true;
 		public static var shotFired:Boolean = false;
 		public static var stillInJungle:Boolean = true;
+		public static var farEnoughText:Boolean = false;
 		
 		public static var player:Player;
 		public static var playerShooting:PlayerShooting;

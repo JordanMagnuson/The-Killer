@@ -56,8 +56,9 @@ package game
 			//trace('release cloud');
 			mountainAlarm.reset(mountainReleaseTime);
 			
-			if ((FP.world as MyWorld).location.type != 'jungle')
-				FP.world.add(new Mountain);						// No mountains in jungle
+			FP.world.add(new Mountain);	
+			//if ((FP.world as MyWorld).location.type != 'jungle')
+				//FP.world.add(new Mountain);						// No mountains in jungle
 		}
 		
 		public function changeMountainDensity():void

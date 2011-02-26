@@ -8,7 +8,7 @@ package game
 	import net.flashpunk.graphics.Text;
 	import net.flashpunk.tweens.misc.ColorTween;
 	
-	public class textPress extends Entity
+	public class textNotFarEnough extends Entity
 	{		
 		public static const FADE_IN_DURATION:Number = 3;
 		public static const FADE_OUT_DURATION:Number = 3;
@@ -16,13 +16,21 @@ package game
 		public static var text:Text;
 		public static var fadeTween:ColorTween;
 		
-		public static var nextTextAlarm:Alarm;
+		public var fadeOutAlarm:Alarm;
 		
-		public static var started:Boolean = false;
+		public var started:Boolean = false;
 		
-		public function textPress() 
+		public function textNotFarEnough() 
 		{
-			text = new Text("Hold space to start walking.");
+			if (!Global.farEnoughText)
+			{
+				Global.farEnoughText = true;
+				text = new Text("You haven't gone far enough.");
+			}
+			else
+			{
+				text = new Text("Still not far enough.");
+			}
 			text.size = 8;
 			text.alpha = 0;
 			graphic = text;			
@@ -30,7 +38,7 @@ package game
 			y = 130;
 			fadeTween = new ColorTween();
 			fadeTween.alpha = 1;
-			nextTextAlarm = new Alarm(2, fadeOut);
+			fadeOutAlarm = new Alarm(1, fadeOut);
 		}	
 		
 		override public function added():void
@@ -46,8 +54,8 @@ package game
 			if (Global.player.walking && started == false)
 			{
 				started = true;
-				FP.world.addTween(nextTextAlarm);
-				nextTextAlarm.start();
+				FP.world.addTween(fadeOutAlarm);
+				fadeOutAlarm.start();
 			}
 		}
 		
@@ -67,7 +75,7 @@ package game
 		{
 			fadeTween = new ColorTween(destroy);
 			addTween(fadeTween);		
-			fadeTween.tween(FADE_OUT_DURATION, Colors.WHITE, Colors.WHITE, 1, 0);				
+			fadeTween.tween(FADE_OUT_DURATION, Colors.WHITE, Colors.WHITE, text.alpha, 0);				
 		}
 		
 		public function destroy():void
