@@ -12,7 +12,14 @@ package
 		[Embed(source = '../assets/beach/water_cover.png')] public static const WATER_COVER:Class;
 		
 		[Embed(source = '../assets/gunshot.swf', symbol = 'DarkoZL__Barret50_amp.wav')] public static const GUNSHOT:Class;
-		[Embed(source='../assets/sounds.swf', symbol='silence.wav')] public static const SILENCE:Class;
+		[Embed(source = '../assets/sounds.swf', symbol = 'silence.wav')] public static const SILENCE:Class;
+		
+		// Game Over
+		[Embed(source = '../assets/end_screen_01_killer.jpg')] public static const END_SCREEN_01_KILLER:Class;
+		[Embed(source = '../assets/end_screen_01_mercy.jpg')] public static const END_SCREEN_01_MERCY:Class;		
+		[Embed(source = '../assets/end_screen_02.jpg')] public static const END_SCREEN_02:Class;
+		[Embed(source = '../assets/end_screen_03.png')] public static const END_SCREEN_03:Class;
+		[Embed(source = '../assets/click_to_continue_black.png')] public static const CLICK_TO_CONTINUE_BLACK:Class;
 	}
 
 }

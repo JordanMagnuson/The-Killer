@@ -49,19 +49,23 @@ package game.plains
 			// Mid Distance
 			if (FP.random > 0.25)
 			{		
-				if (creationNumber < 0.005 && FlowerTree.seen == false)
-				{
-					FP.world.add(new FlowerTree);
-					FlowerTree.seen = true;
-				}				
-				else if (creationNumber < 0.03)
+				//if (creationNumber < 0.005 && FlowerTree.seen == false)
+				//{
+					//FP.world.add(new FlowerTree);
+					//FlowerTree.seen = true;
+				//}				
+				if (creationNumber < 0.03)
 				{
 					FP.world.add(new River);
 				}
 				else if (creationNumber < 0.1)
 				{
 					FP.world.add(new Tree);
-				}				
+				}	
+				else if (creationNumber < 0.2)
+				{
+					FP.world.add(new PlainsPalm);
+				}								
 				else if (creationNumber < 1)
 				{
 					FP.world.add(new Flowers);

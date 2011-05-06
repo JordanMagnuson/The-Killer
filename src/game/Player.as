@@ -76,8 +76,8 @@ package game
 				if (!Global.startedWalking)
 				{
 					Global.playSounds = false;
-					(FP.world as MyWorld).soundController.currentSound.stop();
-					FP.world.remove((FP.world as MyWorld).soundController);
+					//(FP.world as MyWorld).soundController.currentSound.stop();
+					//FP.world.remove((FP.world as MyWorld).soundController);
 					(FP.world as MyWorld).music.loop();
 					standingPush();
 					Global.startedWalking = true;
@@ -130,9 +130,10 @@ package game
 			
 			if (Input.released("X"))
 			{
-				if (Global.stillInJungle)
+				if (!Global.reachedPlains)
 				{
 					FP.world.add(new textNotFarEnough);
+					Global.numberOfStops++;
 				}
 				else
 				{
@@ -141,8 +142,8 @@ package game
 					Global.playerShooting.x = x;
 					Global.playerShooting.y = y;
 					FP.world.add((FP.world as MyWorld).soundController = new SoundController((FP.world as MyWorld).location));
-					if ((FP.world as MyWorld).time == 'night')
-						(FP.world as MyWorld).soundController.startNight();
+					//if ((FP.world as MyWorld).time == 'night')
+						//(FP.world as MyWorld).soundController.startNight();
 					(FP.world as MyWorld).music.stop();
 					Global.playSounds = true;
 					FP.world.remove(this);

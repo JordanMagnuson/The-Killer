@@ -34,7 +34,7 @@ package game.forest
 		
 		public function Forest() 
 		{
-			super(DAY_SOUND, NIGHT_SOUND);
+			super(DAY_SOUND, NIGHT_SOUND, 2);
 			type = 'forest';
 		}
 		
@@ -55,12 +55,12 @@ package game.forest
 			// Mid distance
 			if (FP.random > 0.2)
 			{
-				if (creationNumber < 0.005 && GiantPine.seen == false)
-				{
-					FP.world.add(new GiantPine);
-					GiantPine.seen = true;
-				}
-				else if (creationNumber < 0.01)
+				//if (creationNumber < 0.005 && GiantPine.seen == false)
+				//{
+					//FP.world.add(new GiantPine);
+					//GiantPine.seen = true;
+				//}
+				if (creationNumber < 0.02)
 				{
 					FP.world.add(new River);
 				}
@@ -68,6 +68,10 @@ package game.forest
 				{
 					FP.world.add(new PinetreeSideways);
 				}
+				//else if (creationNumber < 0.2)
+				//{
+					//FP.world.add(new ForestPalm);
+				//}				
 				else if (creationNumber < 1)
 				{
 					FP.world.add(new Pinetree);

@@ -61,7 +61,7 @@ package game.forest
 			if (Global.playSounds)
 			{
 				sndRiver.pan = FP.scale(x, 0, FP.screen.width, -1, 1);
-				if (x <= 52 && !fadeStarted)
+				if (x <= 0 && !fadeStarted)
 				{
 					trace('start river fade out');
 					fadeStarted = true;

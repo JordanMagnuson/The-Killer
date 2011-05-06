@@ -4,6 +4,7 @@ package game.beach
 	import flash.geom.Point;
 	import game.*;
 	import game.desert.Cactus;
+	import game.forest.ForestPalm;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
 	import game.Player;
@@ -70,14 +71,14 @@ package game.beach
 			// Mid Distance
 			if (FP.random > 0.25)
 			{		
-				if (creationNumber < 0.005 && Castle.seen == false)
+				//if (creationNumber < 0.005 && Castle.seen == false)
+				//{
+					//FP.world.add(new Castle);
+					//Castle.seen = true;
+				//}
+				if (creationNumber < 0.05)
 				{
-					FP.world.add(new Castle);
-					Castle.seen = true;
-				}
-				else if (creationNumber < 0.05)
-				{
-					FP.world.add(new Cactus);
+					FP.world.add(new BeachPalm);
 				}
 				else if (creationNumber < 0.4)
 				{

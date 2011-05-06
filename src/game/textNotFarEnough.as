@@ -22,14 +22,23 @@ package game
 		
 		public function textNotFarEnough() 
 		{
-			if (!Global.farEnoughText)
+			if (Global.touchedPlains)
 			{
-				Global.farEnoughText = true;
-				text = new Text("You haven't gone far enough.");
+				text = new Text("Just a little bit further.");
 			}
-			else
+			else switch (Global.numberOfStops)
 			{
-				text = new Text("Still not far enough.");
+				case 0:
+					text = new Text("You haven't gone far enough.");
+					break;
+				case 1:
+					text = new Text("Continue to the fields.");
+					break;
+				case 2:
+					text = new Text("There are fields ahead.");	
+					break;
+				default:
+					text = new Text("The fields are beyond the beach.");
 			}
 			text.size = 8;
 			text.alpha = 0;

@@ -5,6 +5,8 @@ package game
 	import net.flashpunk.FP;
 	import net.flashpunk.tweens.misc.Alarm;
 	import net.flashpunk.utils.Input;
+	import net.flashpunk.World;
+	import rooms.GameOver;
 	import rooms.MyWorld;
 	import net.flashpunk.Sfx;
 	
@@ -22,6 +24,8 @@ package game
 		public var playMusicAlarm:Alarm = new Alarm(0.00001, playMusic);
 		
 		public var killVictimAlarm:Alarm = new Alarm(0.00001, killVictim);
+		
+		public var gameOverAlarm:Alarm = new Alarm(3, gameOver);
 		
 		/**
 		 * Player graphic
@@ -49,7 +53,7 @@ package game
 		
 		override public function added():void
 		{
-			FP.world.add(new Gun);
+			FP.world.add(Global.gun = new Gun);
 			FP.world.add(Global.crossHair = new Crosshair);
 			addTween(kneelAlarm, true);
 			addTween(playMusicAlarm);
@@ -58,21 +62,31 @@ package game
 		
 		override public function update():void
 		{
+			//trace(Global.gun.image.angle);
+			
 			if (Input.mousePressed && !Global.shotFired)
 			{
 				Global.shotFired = true;
-				gunshot.play();
+				gunshot.play(2);
 				
 				// Stop sounds
 				Global.playSounds = false;
-				(FP.world as MyWorld).soundController.currentSound.stop();
-				FP.world.remove((FP.world as MyWorld).soundController);		
 				
-				// Play music
-				playMusicAlarm.start();
+				// Merciful shot?
+				if (Global.gun.image.angle > 8 && Global.gun.image.angle < 348)
+				{
+					Global.mercifulShot = true;
+					(FP.world as MyWorld).soundController.stopSounds();
+					addTween(gameOverAlarm, true);
+				}
+				else 
+				{
+					// Play music
+					playMusicAlarm.start();
 				
-				killVictimAlarm.start();
-				
+					killVictimAlarm.start();					 
+				}
+		
 				// get rid of crosshairs
 				FP.world.remove(Global.crossHair);
 				
@@ -84,7 +98,8 @@ package game
 		
 		public function makeVictimKneel():void
 		{
-			Global.victim.kneel();
+			if (!Global.mercifulShot)
+				Global.victim.kneel();
 		}
 		
 		public function playMusic():void
@@ -100,6 +115,13 @@ package game
 			Global.deadVictim.x = Global.victim.x;
 			Global.deadVictim.y = Global.victim.y;
 			FP.world.remove(Global.victim);					
+		}
+		
+		public function gameOver():void
+		{
+			FP.world.add((FP.world as MyWorld).soundController = new SoundController((FP.world as MyWorld).location));
+			Global.playSounds = true;			
+			FP.world.add(new FadeOut((GameOver as World), Colors.BLACK, 3, 0));
 		}
 		
 	}

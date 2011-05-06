@@ -16,11 +16,18 @@ package game
 		public static var farEnough:Boolean = true;
 		public static var playSounds:Boolean = true;
 		public static var shotFired:Boolean = false;
+		public static var mercifulShot:Boolean = false;
 		public static var stillInJungle:Boolean = true;
-		public static var farEnoughText:Boolean = false;
+		public static var touchedPlains:Boolean = false;
+		public static var reachedPlains:Boolean = false;
+		public static var numberOfStops:int = 0;
+		public static var locationChanges:int = 0;
+		
+		public static var endScreen:int = 0;
 		
 		public static var player:Player;
 		public static var playerShooting:PlayerShooting;
+		public static var gun:Gun;
 		public static var victim:Victim;
 		public static var deadVictim:DeadVictim;
 		public static var deadUnderground:DeadUnderground;

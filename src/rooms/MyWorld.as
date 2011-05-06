@@ -72,6 +72,8 @@ package rooms
 		public var music:Sfx = new Sfx(Assets.MUSIC);			
 		public var musicEnd:Sfx = new Sfx(Assets.MUSIC_END);
 		
+		public var reachedPlainsAlarm:Alarm = new Alarm(15, reachedPlains);
+		
 		public function MyWorld()      
 		{
 			// World size
@@ -193,14 +195,32 @@ package rooms
 		 */
 		public function changeLocation(newLocation:Location = null):void
 		{
-			//trace('Changing location');
+			trace('location changes: ' + Global.locationChanges);
+			
+			// First few location changes are deteremined
+			switch (Global.locationChanges)
+			{
+				case 0: 
+					newLocation = new Forest; // Forest
+					break;
+				case 1:
+					newLocation = new Beach;
+					break;
+				case 2:
+					Global.touchedPlains = true;				
+					addTween(reachedPlainsAlarm, true);
+					trace('reached plains alarm set');
+					newLocation = new Plains;
+					break;
+			}
+			
 			if (newLocation == null)
 			{
 				var newLocation:Location;
 				do 
 				{
-					newLocation = FP.choose(new Forest, new Desert, new Plains, new Snow, new Beach);
-					//newLocation = FP.choose(new Forest, new Beach);
+					newLocation = FP.choose(new Jungle, new Forest, new Plains, new Beach);
+					//newLocation = new Beach;
 				} 
 				while (newLocation.type == this.location.type);
 			}
@@ -211,6 +231,14 @@ package rooms
 			oldGround = ground;
 			add(ground = new Ground(location));			
 			//trace('new location: ' + location);
+
+			Global.locationChanges++;			
+		}
+		
+		public function reachedPlains():void
+		{
+			trace('reached plains');
+			Global.reachedPlains = true;
 		}
 		
 		/**
@@ -222,7 +250,7 @@ package rooms
 			//trace('Slope: ' + location.creationTimeSlope);
 			changeLocationAlarm.reset(CHANGE_LOCATION_TIME);
 			
-			if (location.type == 'jungle')
+			if (Global.locationChanges == 0)
 			{
 				trace('too early to change out of jungle');
 				return;
@@ -285,6 +313,21 @@ package rooms
 		{
 			add(new textJordan);
 		}
+		
+		//public function stopAllSounds():void
+		//{
+			//Global.playSounds = false;
+			//var soundControllers:Array = [];
+			//getClass(SoundController, soundControllers);
+			//for each (var e:SoundController in soundControllers)
+			//{
+				//e.removeTween((e.fader));
+				//e.fader.fadeTo(0, 0.01);
+				//e.currentSound.stop();
+				//e.newSound.stop();
+				//remove(e);
+			//}
+		//}
 
 	}
 }

@@ -8,11 +8,13 @@ package
 	import net.flashpunk.FP;
 	import net.flashpunk.World;
 	import rooms.MyWorld;
+	import game.Global;
 
 	public class SoundController extends Entity
 	{
 		public const FADE_DURATION:Number = 10;
 		
+		public var location:Location;
 		public var currentSound:Sfx;
 		public var newSound:Sfx;
 		public var fader:SfxFader;
@@ -22,16 +24,38 @@ package
 		public function SoundController(location:Location) 
 		{
 			trace('sound controller init');
-			currentSound = location.daySound;
+			this.location = location;
+		}
+		
+		override public function added():void
+		{
+			if ((FP.world as MyWorld).time == 'day')
+				currentSound = location.daySound;
+			else
+				currentSound = location.nightSound;
 			currentSound.loop(1);
 			fader = new SfxFader(currentSound, fadeComplete);
-			addTween(fader);
+			addTween(fader);			
 		}
 		
 		override public function update():void
 		{
+			//trace('play sounds? ' + Global.playSounds)
+			if (!Global.playSounds)
+				stopSounds();
 			super.update();
 			//trace('in process: ' + inProcess);
+		}
+		
+		public function stopSounds():void
+		{
+			if (!inProcess)
+			{
+				if (currentSound) currentSound.stop();
+				if (newSound) newSound.stop();
+//				if (fader) removeTween(fader);
+				FP.world.remove(this);
+			}
 		}
 		
 		public function changeLocation(newLocation:Location):void
@@ -62,6 +86,11 @@ package
 		public function fadeComplete():void
 		{
 			inProcess = false;
+			
+			if (!Global.playSounds)
+			{
+				stopSounds();
+			}
 			
 			if ((FP.world as MyWorld).time == 'day' && currentSound != (FP.world as MyWorld).location.daySound)
 			{

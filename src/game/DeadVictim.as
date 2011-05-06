@@ -4,6 +4,7 @@ package game
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.FP;
+	import rooms.GameOver;
 	
 	/**
 	 * ...
@@ -47,11 +48,15 @@ package game
 			spritemap.angle -= 1 * FP.rate;		
 			y += 0.5 * FP.rate;
 			
+			//trace(y);
+			if (y > 1175) // 1175
+				FP.world = new GameOver();
+			
 			//if (fallSpeed < MAX_FALL_SPEED)
 			//{
 				//fallSpeed += 0.001;
 			//}
-			trace(fallSpeed);
+			//trace(fallSpeed);
 			//if (spritemap.index == 1 || spritemap.complete)
 			//{
 				//y += 0.5;

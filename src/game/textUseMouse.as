@@ -28,7 +28,7 @@ package game
 			text.alpha = 0;
 			graphic = text;			
 			x = 20;
-			y = 130;
+			y = 120;
 			fadeTween = new ColorTween();
 			fadeTween.alpha = 0;
 		}	
