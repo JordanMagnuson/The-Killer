@@ -26,6 +26,9 @@ package game
 		public var killVictimAlarm:Alarm = new Alarm(0.00001, killVictim);
 		
 		public var gameOverAlarm:Alarm = new Alarm(16, gameOver);			// 10
+		public var startFallingCameraAlarm:Alarm = new Alarm(17, startFallingCamera);
+		
+		public var fadeItemsAlarm:Alarm;
 		
 		public var victimRunAlarm:Alarm = new Alarm(3, makeVictimRun);	// 8
 		
@@ -112,7 +115,22 @@ package game
 			FP.world.add(Global.victimStillRun = new VictimStillRunController);
 			//Global.victim.waitToFade();
 			Global.victim.fadeOut();
-			addTween(gameOverAlarm, true);
+			addTween(startFallingCameraAlarm, true);
+			FP.world.add(new DeadUnderground);
+			
+			// Start music back up
+			(FP.world as MyWorld).music.play(0);
+			(FP.world as MyWorld).musicFader.fadeTo(1, 10);
+			
+			// Fade items (trees, etc.)
+			fadeItems(10);
+			//fadeItemsAlarm = new Alarm(10, fadeItems
+			
+		}
+		
+		public function fadeItems(duration:Number = 10):void
+		{
+			(FP.world as MyWorld).fadeAllItemsGeneric(duration);
 		}
 		
 		public function playMusic():void
@@ -129,6 +147,11 @@ package game
 			Global.deadVictim.y = Global.victim.y;
 			FP.world.remove(Global.victim);					
 		}
+		
+		public function startFallingCamera():void
+		{
+			FP.world.add(new FallingCameraGuide());
+		}			
 		
 		public function gameOver():void
 		{

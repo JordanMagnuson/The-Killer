@@ -20,7 +20,7 @@ package game
 		
 		public function Explosion() 
 		{
-			spritemap.add("explode", [0, 1, 2, 3, 4, 5], 15 , false);
+			spritemap.add("explode", [0, 1, 2, 3, 4, 5], 20 , false);
 			graphic = spritemap;
 			layer = -1000;
 			
@@ -41,7 +41,7 @@ package game
 		override public function added():void
 		{
 			spritemap.play('explode');
-			sndExplosion.play();
+			sndExplosion.play(0.8);
 		}
 		
 		override public function update():void

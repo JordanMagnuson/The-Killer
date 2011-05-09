@@ -29,6 +29,8 @@ package game
 		
 		public function complete():void
 		{
+			if (Global.shotFired || Global.exploded)
+				return;			
 			FP.world.add(new Sunset);
 			FP.world.remove(this);
 		}

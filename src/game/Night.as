@@ -100,6 +100,8 @@ package game
 		
 		public function complete():void
 		{
+			if (Global.shotFired || Global.exploded)
+				return;
 			FP.world.add(new Day(FP.world));
 			fadeOut();
 		}

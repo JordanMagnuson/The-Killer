@@ -79,7 +79,9 @@ package rooms
 		
 		public var explosionAlarm:Alarm;
 		
-		public var fadeItemAlarm:Alarm = new Alarm(5, fadeAllItems);
+		public var fadeItemAlarm:Alarm = new Alarm(6, fadeAllItemsAfterExplosion);
+		
+		public var startFallingCameraAlarm:Alarm;
 		
 		public function MyWorld()      
 		{
@@ -132,13 +134,17 @@ package rooms
 			location.creationTimeAlarm.reset(0.1);
 			
 			// Explosion?
-			Global.shouldExplode = FP.choose(true, false);
-			if (true)
+			if (FP.random <= Global.EXPLOSION_CHANCE)
+				Global.shouldExplode = true;
+			if (Global.shouldExplode)
 			{
-				Global.explosionTime = 20;
+				Global.explosionTime = Global.EARLIEST_EXPLOSION + FP.random * (Global.LATEST_EXPLOSION - Global.EARLIEST_EXPLOSION);
 				explosionAlarm = new Alarm(Global.explosionTime, explode);
 				addTween(explosionAlarm, true);
+				trace('explosion set to: ' + Global.explosionTime);
 			}
+			else
+				trace('no explosion this time');
 		}
 		
 		override public function begin():void
@@ -153,17 +159,29 @@ package rooms
 		 */
 		override public function update():void 
 		{
+		//	trace('Global.playSounds: ' + Global.playSounds);
+			
 			// Testing
-			if (Input.pressed(Key.C))
- 			{
-				trace('c presesd');
-				this.changeLocation();
+			if (Input.pressed(Key.F12))
+			{
+				Global.shouldExplode = true;
+				Global.explosionTime = Global.EARLIEST_EXPLOSION + FP.random * (Global.LATEST_EXPLOSION - Global.EARLIEST_EXPLOSION);
+				explosionAlarm = new Alarm(Global.explosionTime, explode);
+				addTween(explosionAlarm, true);
+				trace('explosion set to: ' + Global.explosionTime);
 			}
-			else if (Input.pressed(Key.N))
- 			{
-				trace('n presesd');
-				advanceTime();
-			}			
+			
+
+			//if (Input.pressed(Key.C))
+ 			//{
+				//trace('c presesd');
+				//this.changeLocation();
+			//}
+			//else if (Input.pressed(Key.N))
+ 			//{
+				//trace('n presesd');
+				//advanceTime();
+			//}			
 			
 			// Update entities
 			super.update();
@@ -203,6 +221,12 @@ package rooms
 		
 		public function explode():void
 		{
+			if (!Global.player.walking)
+			{
+				explosionAlarm.reset(1);
+				return;
+			}
+			FP.rate = 0.4;
 			Global.exploded = true;
 			add(new Explosion);
 			add(new ExplodedPlayer(Global.player.x - 10, Global.player.y));
@@ -211,11 +235,20 @@ package rooms
 			remove(Global.victim);		
 			//fadeAllItems();
 			music.stop();
+			Global.playSounds = false;
 			addTween(fadeItemAlarm, true);
+			FP.world.add(Global.deadUnderground = new DeadUnderground);
 		}
 		
-		public function fadeAllItems():void
+		public function startFallingCamera():void
 		{
+			add(new FallingCameraGuide());
+		}
+		
+		public function fadeAllItemsAfterExplosion():void
+		{
+			startFallingCameraAlarm = new Alarm(13, startFallingCamera);
+			addTween(startFallingCameraAlarm, true);
 			music.play(0);
 			musicFader.fadeTo(1, 10);
 			var itemList:Array = [];
@@ -223,9 +256,20 @@ package rooms
 			for each (var i:Item in itemList)
 			{
 				if (i.type != 'cloud')
-					i.fadeOutImage(20);
+					i.fadeOutImage(10);
 			}				
 		}
+		
+		public function fadeAllItemsGeneric(duration:Number = 10):void
+		{
+			var itemList:Array = [];
+			getClass(Item, itemList);		
+			for each (var i:Item in itemList)
+			{
+				if (i.type != 'cloud')
+					i.fadeOutImage(duration);
+			}				
+		}		
 		
 		public function fadeItem():void
 		{

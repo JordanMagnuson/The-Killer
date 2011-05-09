@@ -8,7 +8,10 @@ package game
 	{
 		// Global constants
 		public static const WALKING_SPEED:Number = 100;
-		public static const TIME_IN_JUNGLE:Number = 1; // 115
+		public static const TIME_IN_JUNGLE:Number = 115; // 115
+		public static const EARLIEST_EXPLOSION:Number = 100;
+		public static const LATEST_EXPLOSION:Number = 200;
+		public static const EXPLOSION_CHANCE:Number = 0.25;
 		
 		// Global variables
 		public static var shouldExplode:Boolean = false;
@@ -21,8 +24,8 @@ package game
 		public static var shotFired:Boolean = false;
 		public static var mercifulShot:Boolean = false;
 		public static var stillInJungle:Boolean = true;
-		public static var touchedPlains:Boolean = true;
-		public static var reachedPlains:Boolean = true;
+		public static var touchedPlains:Boolean = false;
+		public static var reachedPlains:Boolean = false;
 		public static var numberOfStops:int = 0;
 		public static var locationChanges:int = 0;
 		
