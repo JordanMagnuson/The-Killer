@@ -16,7 +16,6 @@ package game.forest
 		 * Graphics
 		 */
 		[Embed(source='../../../assets/river.png')] private const SPRITE01:Class;		
-		public var spriteMap:Spritemap = new Spritemap(SPRITE01, 24, 28);
 		
 		/**
 		 * Sound
@@ -30,6 +29,8 @@ package game.forest
 		
 		public function River() 
 		{
+			spriteMap = new Spritemap(SPRITE01, 24, 28);
+			
 			rawSprite = SPRITE01;		
 			super(rawSprite, 'mid', false);
 			spriteMap.add("flow", [0, 1, 2], 10, true);

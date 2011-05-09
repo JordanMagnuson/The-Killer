@@ -10,6 +10,8 @@ package rooms
 	import net.flashpunk.Entity;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.Alarm;
+	import net.flashpunk.tweens.sound.Fader;
+	import net.flashpunk.tweens.sound.SfxFader;
 	import net.flashpunk.World;
 	import net.flashpunk.FP;
 	import net.flashpunk.utils.Input;
@@ -70,9 +72,14 @@ package rooms
 		 * Music
 		 */
 		public var music:Sfx = new Sfx(Assets.MUSIC);			
+		public var musicFader:SfxFader = new SfxFader(music);
 		public var musicEnd:Sfx = new Sfx(Assets.MUSIC_END);
 		
 		public var reachedPlainsAlarm:Alarm = new Alarm(15, reachedPlains);
+		
+		public var explosionAlarm:Alarm;
+		
+		public var fadeItemAlarm:Alarm = new Alarm(5, fadeAllItems);
 		
 		public function MyWorld()      
 		{
@@ -123,10 +130,20 @@ package rooms
 			location.gameStart(this);
 			location.creationTime = 2;
 			location.creationTimeAlarm.reset(0.1);
+			
+			// Explosion?
+			Global.shouldExplode = FP.choose(true, false);
+			if (true)
+			{
+				Global.explosionTime = 20;
+				explosionAlarm = new Alarm(Global.explosionTime, explode);
+				addTween(explosionAlarm, true);
+			}
 		}
 		
 		override public function begin():void
 		{
+			addTween(musicFader);
 //			advanceTime();
 //			music.loop();
 		}
@@ -182,6 +199,71 @@ package rooms
 				Global.stillInJungle = false;
 			}
 			
+		}		
+		
+		public function explode():void
+		{
+			Global.exploded = true;
+			add(new Explosion);
+			add(new ExplodedPlayer(Global.player.x - 10, Global.player.y));
+			add(new ExplodedVictim(Global.victim.x + 10, Global.victim.y));
+			remove(Global.player);
+			remove(Global.victim);		
+			//fadeAllItems();
+			music.stop();
+			addTween(fadeItemAlarm, true);
+		}
+		
+		public function fadeAllItems():void
+		{
+			music.play(0);
+			musicFader.fadeTo(1, 10);
+			var itemList:Array = [];
+			getClass(Item, itemList);		
+			for each (var i:Item in itemList)
+			{
+				if (i.type != 'cloud')
+					i.fadeOutImage(20);
+			}				
+		}
+		
+		public function fadeItem():void
+		{
+			trace('fade item');
+			var itemList:Array = [];
+			getClass(Item, itemList);
+			//for each (var e:Item in itemList)
+			//{
+				//if (e.type == 'cloud')
+				//{
+					//itemList.pop();
+				//}
+			//}	
+			if (itemList)
+			{
+				shuffle(itemList);
+				do 
+				{
+					if (itemList[0]) 
+						var e:Item = itemList.pop();
+					else 
+						break;
+				} while (e.type == 'cloud');
+				e.fadeOutImage(3);			
+				fadeItemAlarm.reset(3);
+			}
+		}
+		
+		public function shuffle(a:Array):void
+		{
+			for (var i: int = a.length - 1; i > 0; i--)
+			{
+				var j: int = Math.random() * (i+1);
+				
+				var tmp: * = a[i];
+				a[i] = a[j];
+				a[j] = tmp;
+			}
 		}		
 		
 		//public function changeWalkingSpeed(newSpeed:Number):void

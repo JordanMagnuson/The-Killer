@@ -73,6 +73,11 @@ package game
 			
 			if (Input.check("X"))
 			{
+				if (Global.exploded)
+				{
+					walking = false;
+					return;
+				}
 				if (!Global.startedWalking)
 				{
 					Global.playSounds = false;

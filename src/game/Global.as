@@ -11,6 +11,9 @@ package game
 		public static const TIME_IN_JUNGLE:Number = 1; // 115
 		
 		// Global variables
+		public static var shouldExplode:Boolean = false;
+		public static var explosionTime:Number = 0;
+		public static var exploded:Boolean = false;
 		public static var startedWalking:Boolean = false;
 		public static var firstPush:Boolean = false;
 		public static var farEnough:Boolean = true;

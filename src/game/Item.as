@@ -3,6 +3,9 @@ package game
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Spritemap;
+	import net.flashpunk.tweens.misc.Alarm;
+	import net.flashpunk.tweens.misc.ColorTween;
 	import rooms.MyWorld;
 
 	public class Item extends Entity
@@ -28,12 +31,17 @@ package game
 		 */
 		public var rawSprite:Class;
 		public var image:Image;		
+		public var spriteMap:Spritemap;
 		
 		/**
 		 * Whether this item can overlap others of its type.
 		 * If not, it is removed from the world if overlapping.
 		 */
 		public var overlap:Boolean;
+		
+		public var fadeTween:ColorTween;	
+		public var waitToFadeAlarm:Alarm;
+		public var fading:Boolean = false;		
 		
 		/**
 		 * 
@@ -99,6 +107,12 @@ package game
 		{
 			super.update();
 			
+			if (fading)
+			{
+				image.alpha = fadeTween.alpha;	
+				if (spriteMap) spriteMap.alpha = fadeTween.alpha;
+			}
+			
 			// Destroy when off screen
 			if (x < (0 - image.width) && !offScreen)
 			{
@@ -132,6 +146,20 @@ package game
 				}
 			}
 		}		
+		
+		public function waitToFade(duration:Number = 3):void
+		{
+			waitToFadeAlarm = new Alarm(duration, fadeOutImage);
+			addTween(waitToFadeAlarm, true);
+		}
+		
+		public function fadeOutImage(duration:Number = 10):void
+		{
+			fadeTween = new ColorTween(destroy);
+			addTween(fadeTween);		
+			fadeTween.tween(duration, Colors.WHITE, Colors.WHITE, 1, 0);	
+			fading = true;
+		}
 		
 		public function offScreenAction():void
 		{
