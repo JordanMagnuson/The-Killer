@@ -166,10 +166,19 @@ package rooms
 			{
 				Global.shouldExplode = true;
 				Global.explosionTime = Global.EARLIEST_EXPLOSION + FP.random * (Global.LATEST_EXPLOSION - Global.EARLIEST_EXPLOSION);
+				//Global.explosionTime = 2;
 				explosionAlarm = new Alarm(Global.explosionTime, explode);
 				addTween(explosionAlarm, true);
 				trace('explosion set to: ' + Global.explosionTime);
 			}
+			if (Input.pressed(Key.F11))
+			{
+				Global.shouldExplode = false;
+				Global.explosionTime = 5000;
+				//Global.explosionTime = 2;
+				if (explosionAlarm) removeTween(explosionAlarm);
+				trace('explosion canceled');
+			}			
 			
 
 			//if (Input.pressed(Key.C))

@@ -39,6 +39,8 @@ package rooms
 			add(new FadeIn(Colors.BLACK, 6));
 			if (Global.mercifulShot)
 				add(new Entity(0, 0, new Image(Assets.END_SCREEN_01_MERCY)));
+			else if (Global.exploded)
+				add(new Entity(0, 0, new Image(Assets.END_SCREEN_01_EXPLOSION)));
 			else
 				add(new Entity(0, 0, new Image(Assets.END_SCREEN_01_KILLER)));				
 		}

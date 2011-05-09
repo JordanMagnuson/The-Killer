@@ -29,7 +29,7 @@ package game
 			
 			(graphic as Image).alpha = 0;
 			
-			y = FP.halfHeight;
+			y = FP.halfHeight + 25;
 			x = FP.halfWidth;
 		}
 		

@@ -20,7 +20,7 @@ package game
 		
 		public function Explosion() 
 		{
-			spritemap.add("explode", [0, 1, 2, 3, 4, 5], 20 , false);
+			spritemap.add("explode", [0, 1, 2, 3, 4, 5], 30, false);	// Rate: 20
 			graphic = spritemap;
 			layer = -1000;
 			
@@ -35,7 +35,7 @@ package game
 			
 			// Location
 			x = Global.victim.x;
-			y = Ground.y;			
+			y = Ground.y - 10;			
 		}
 		
 		override public function added():void
