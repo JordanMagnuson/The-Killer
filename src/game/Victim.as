@@ -3,6 +3,7 @@ package game
 	import net.flashpunk.Entity;
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.tweens.misc.Alarm;
+	import net.flashpunk.tweens.misc.ColorTween;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.FP;
 	import net.flashpunk.Sfx;
@@ -10,6 +11,8 @@ package game
 	
 	public class Victim extends Entity
 	{
+		public static const FADE_OUT_DURATION:Number = 2;
+		
 		public const WALK_DELAY_TIME:Number = 1;
 		public const STOP_DELAY_TIME:Number = 0.7;
 		public const STUMBLE_TIME:Number = 0.2;
@@ -17,6 +20,7 @@ package game
 		
 		public const DEFAULT_WALKING_SPEED:Number = 0.5;
 		public const WALK_FAST_SPEED:Number = 0.6;
+		public const RUN_SPEED:Number = 1.3;
 		public var walkingSpeed:Number = DEFAULT_WALKING_SPEED;
 		
 		public const DEFAULT_ANIM_SPEED:Number = 10;
@@ -26,6 +30,7 @@ package game
 		public var stumbling:Boolean = false;
 		public var fastWalking:Boolean = false;
 		public var kneeling:Boolean = false;
+		public var runningAway:Boolean = false;
 		
 		
 		public var walkingAlarm:Alarm =  new Alarm(WALK_DELAY_TIME, slowWalk);
@@ -34,6 +39,9 @@ package game
 		public var stumbleAlarm:Alarm = new Alarm(STUMBLE_TIME, stumble);
 		public var fastWalkAlarm:Alarm = new Alarm(FAST_WALK_TIME, slowWalk);
 		
+		public var fadeTween:ColorTween;	
+		public var waitToFadeAlarm:Alarm;
+		public var fading:Boolean = false;
 		
 		/**
 		 * Player graphic
@@ -49,6 +57,7 @@ package game
 			spritemap.add("stumble", [0, 1, 2, 3], animSpeed, false);
 			spritemap.add("walk", [5, 6, 7, 4], animSpeed * 0.8, true);
 			spritemap.add("fast_walk", [5, 6, 7, 4], animSpeed * 1.2, true);
+			spritemap.add("run", [5, 6, 7, 4], animSpeed * 1.4, true);
 			spritemap.add("kneel", [8, 9, 10, 11], 1, false);
 			graphic = spritemap;
 			spritemap.play("stand");
@@ -75,6 +84,9 @@ package game
 		override public function update():void 
 		{
 			super.update();
+			
+			if (fading)
+				spritemap.alpha = fadeTween.alpha;
 						
 			if (spritemap.currentAnim == 'stumble' && spritemap.complete)
 			{
@@ -120,6 +132,12 @@ package game
 				else
 					slowWalk();
 			}
+			else if (runningAway)
+			{
+				//trace('fast walking');
+				spritemap.play("run");
+				x += RUN_SPEED;
+			}			
 			else if (kneeling)
 			{
 				spritemap.play('kneel');
@@ -157,9 +175,12 @@ package game
 		
 		public function slowWalk():void
 		{
-			walking = true;
-			fastWalking = false;
-			walkingAlarm.active = false;
+			if (fastWalking)
+			{
+				walking = true;
+				fastWalking = false;
+				walkingAlarm.active = false;
+			}
 		}
 		
 		public function fastWalk():void
@@ -170,11 +191,38 @@ package game
 			walkingAlarm.active = false;
 		}
 		
+		public function runAway():void
+		{
+			walking = false;
+			fastWalking = false;
+			runningAway = true;
+			walkingAlarm.active = false;			
+		}
+		
 		public function stumble():void
 		{
 			//Global.WALKING_SPEED *= 0.5;
 			spritemap.play('stumble');
 			stumbling = true;
+		}
+		
+		public function waitToFade():void
+		{
+			waitToFadeAlarm = new Alarm(Global.victimStillRun.DISPLAY_EACH_DURATION, fadeOut);
+			addTween(waitToFadeAlarm, true);
+		}
+		
+		public function fadeOut():void
+		{
+			fadeTween = new ColorTween(destroy);
+			addTween(fadeTween);		
+			fadeTween.tween(FADE_OUT_DURATION, Colors.WHITE, Colors.WHITE, 1, 0);	
+			fading = true;
+		}
+		
+		public function destroy():void
+		{
+			FP.world.remove(this);
 		}
 				
 		

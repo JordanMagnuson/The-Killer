@@ -35,13 +35,15 @@ package game
 		
 		override public function added():void
 		{
-			Mouse.show();
 			fadeIn();
 		}			
 		
 		override public function update():void
 		{
 			(graphic as Image).alpha = fadeTween.alpha;
+			
+			if (fadeTween.alpha >= 0.5)
+				Mouse.show();
 			
 			if (Input.mouseReleased)
 			{

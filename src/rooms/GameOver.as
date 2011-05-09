@@ -35,6 +35,7 @@ package rooms
 		
 		override public function begin():void
 		{
+			FP.rate = 0.4;
 			add(new FadeIn(Colors.BLACK, 6));
 			if (Global.mercifulShot)
 				add(new Entity(0, 0, new Image(Assets.END_SCREEN_01_MERCY)));

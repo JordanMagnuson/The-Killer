@@ -19,6 +19,8 @@ package
 		public var newSound:Sfx;
 		public var fader:SfxFader;
 		public var inProcess:Boolean = false;
+		
+		public var fadingOut:Boolean = false;
 
 		
 		public function SoundController(location:Location) 
@@ -49,18 +51,24 @@ package
 		
 		public function stopSounds():void
 		{
-			if (!inProcess)
+			Global.playSounds = false;
+			if (!inProcess && !fadingOut)
 			{
-				if (currentSound) currentSound.stop();
+				fadingOut = true;
+				trace('stop sounds going');
 				if (newSound) newSound.stop();
+				fader.fadeTo(0, 3);
+				//if (currentSound) currentSound.stop();
 //				if (fader) removeTween(fader);
-				FP.world.remove(this);
+				//FP.world.remove(this);
 			}
 		}
 		
 		public function changeLocation(newLocation:Location):void
 		{
 			trace('change location');
+			if (fadingOut)
+				return;
 			if (inProcess == true)
 			{
 				trace('in process');
@@ -87,6 +95,9 @@ package
 		{
 			inProcess = false;
 			
+			if (fadingOut)
+				return;
+				
 			if (!Global.playSounds)
 			{
 				stopSounds();
@@ -110,6 +121,9 @@ package
 		
 		public function startNight():void
 		{
+			if (fadingOut)
+				return;
+				
 			trace('start night');
 			if (inProcess == true)
 			{
@@ -128,6 +142,9 @@ package
 		
 		public function startDay():void
 		{
+			if (fadingOut)
+				return;
+				
 			trace('start day');
 			if (inProcess == true)
 			{

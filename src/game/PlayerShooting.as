@@ -25,7 +25,9 @@ package game
 		
 		public var killVictimAlarm:Alarm = new Alarm(0.00001, killVictim);
 		
-		public var gameOverAlarm:Alarm = new Alarm(3, gameOver);
+		public var gameOverAlarm:Alarm = new Alarm(16, gameOver);			// 10
+		
+		public var victimRunAlarm:Alarm = new Alarm(3, makeVictimRun);	// 8
 		
 		/**
 		 * Player graphic
@@ -75,23 +77,25 @@ package game
 				// Merciful shot?
 				if (Global.gun.image.angle > 8 && Global.gun.image.angle < 348)
 				{
+					trace('mercy shot');
 					Global.mercifulShot = true;
+					Global.playSounds = false;
 					(FP.world as MyWorld).soundController.stopSounds();
-					addTween(gameOverAlarm, true);
+					addTween(victimRunAlarm, true);
 				}
 				else 
 				{
 					// Play music
 					playMusicAlarm.start();
 				
-					killVictimAlarm.start();					 
+					killVictimAlarm.start();				
 				}
+				
+				// Slow everything down (clouds)
+				FP.rate = 0.4;						
 		
 				// get rid of crosshairs
 				FP.world.remove(Global.crossHair);
-				
-				// Slow everything down (clouds)
-				FP.rate = 0.4;
 			}
 			super.update();
 		}
@@ -100,6 +104,15 @@ package game
 		{
 			if (!Global.mercifulShot)
 				Global.victim.kneel();
+		}
+		
+		public function makeVictimRun():void
+		{
+			//Global.victim.runAway();
+			FP.world.add(Global.victimStillRun = new VictimStillRunController);
+			//Global.victim.waitToFade();
+			Global.victim.fadeOut();
+			addTween(gameOverAlarm, true);
 		}
 		
 		public function playMusic():void
@@ -119,8 +132,8 @@ package game
 		
 		public function gameOver():void
 		{
-			FP.world.add((FP.world as MyWorld).soundController = new SoundController((FP.world as MyWorld).location));
-			Global.playSounds = true;			
+			//FP.world.add((FP.world as MyWorld).soundController = new SoundController((FP.world as MyWorld).location));
+			//Global.playSounds = true;			
 			FP.world.add(new FadeOut((GameOver as World), Colors.BLACK, 3, 0));
 		}
 		
