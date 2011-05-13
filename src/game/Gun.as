@@ -29,8 +29,8 @@ package game
 		
 		override public function update():void
 		{
-			if (!Global.shotFired || Global.mercifulShot)
-		//	if (!Global.shotFired)
+		//	if (!Global.shotFired || Global.mercifulShot)
+			if (!Global.shotFired)
 				image.angle = FP.angle(x,y,FP.world.mouseX,FP.world.mouseY);
 			super.update();
 		}
