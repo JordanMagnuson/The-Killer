@@ -20,6 +20,7 @@
 			//FP.console.enable();					
 			
 			FP.world = new MyWorld;
+			//FP.world = new GameOver;
 			Mouse.hide();
 			Mouse.cursor
 		}

@@ -25,6 +25,7 @@ package rooms
 		public var learnMoreGameTrekkingCambodiaURL:String = "http://www.gametrekking.com/blog/cambodia-like-no-place-ive-been";
 		public var learnMoreKillingFieldsURL:String = "http://en.wikipedia.org/wiki/The_killing_fields";
 		public var learnMoreCambodiaURL:String = "http://en.wikipedia.org/wiki/Cambodia";
+		public var leaveCommentURL:String = "http://www.gametrekking.com/comment/reply/58#comment-form";
 		
 		public function GameOver() 
 		{
@@ -60,15 +61,15 @@ package rooms
 				  trace("Error occurred!");
 				}
 			}
-			//if (Global.endScreen >= 2 && Input.pressed(Key.X))
-			//{
-				//request = new URLRequest(learnMoreCambodiaURL);
-				//try {
-				  //navigateToURL(request, '_blank'); // second argument is target
-				//} catch (e:Error) {
-				  //trace("Error occurred!");
-				//}
-			//}
+			if (Global.endScreen >= 2 && Input.pressed(Key.X))
+			{
+				request = new URLRequest(leaveCommentURL);
+				try {
+				  navigateToURL(request, '_blank'); // second argument is target
+				} catch (e:Error) {
+				  trace("Error occurred!");
+				}
+			}
 			super.update();
 		}		
 		

@@ -78,7 +78,8 @@ package game
 		 */
 		public function destroy():void
 		{
-			FP.world.add(new ClickToContinue);
+			if (Global.endScreen < 2)
+				FP.world.add(new ClickToContinue);
 			FP.world.remove(this);
 		}
 		
