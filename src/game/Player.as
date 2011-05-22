@@ -80,6 +80,7 @@ package game
 				}
 				if (!Global.startedWalking)
 				{
+					Global.timeCounter.started = true;
 					Global.playSounds = false;
 					//(FP.world as MyWorld).soundController.currentSound.stop();
 					//FP.world.remove((FP.world as MyWorld).soundController);

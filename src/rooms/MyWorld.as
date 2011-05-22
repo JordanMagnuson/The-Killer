@@ -160,6 +160,8 @@ package rooms
 		override public function update():void 
 		{
 		//	trace('Global.playSounds: ' + Global.playSounds);
+		
+			trace('time: ' + Global.timeCounter.timePassed);
 			
 			// Testing
 			if (Input.pressed(Key.F12))
@@ -219,12 +221,22 @@ package rooms
 			}
 			
 			// Time to swtich out of jungle?
-			if (Global.stillInJungle && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE)
+			if (Global.locationChanges == 0 && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE)
 			{
 				trace('change out of jungle');
 				changeLocation();
 				Global.stillInJungle = false;
 			}
+			else if (Global.locationChanges == 1 && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE + Global.TIME_IN_FOREST)
+			{
+				trace('change out of forest');
+				changeLocation();
+			}			
+			else if (Global.locationChanges == 2 && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE + Global.TIME_IN_FOREST + Global.TIME_IN_BEACH)
+			{
+				trace('change out of beach');
+				changeLocation();
+			}				
 			
 		}		
 		
@@ -336,10 +348,10 @@ package rooms
 			switch (Global.locationChanges)
 			{
 				case 0: 
-					newLocation = new Forest; // Forest
+					newLocation = new Forest; 	// Forest
 					break;
 				case 1:
-					newLocation = new Beach;
+					newLocation = new Beach;	// Beach
 					break;
 				case 2:
 					Global.touchedPlains = true;				

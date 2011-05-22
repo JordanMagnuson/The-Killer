@@ -13,6 +13,8 @@ package game
 		public var minutesPassed:Number = 0;
 		public var secondsPassed:Number = 0;
 		
+		public var started:Boolean = false;
+		
 		public function TimeCounter() 
 		{
 			
@@ -20,10 +22,13 @@ package game
 		
 		override public function update():void
 		{
-			timePassed += FP.elapsed;
-			minutesPassed = Math.floor(timePassed / 60);
-			secondsPassed = Math.floor(timePassed % 60);
-			super.update();
+			if (started)
+			{
+				timePassed += FP.elapsed;
+				minutesPassed = Math.floor(timePassed / 60);
+				secondsPassed = Math.floor(timePassed % 60);
+				super.update();
+			}
 		}
 		
 	}

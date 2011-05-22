@@ -9,6 +9,8 @@ package game
 		// Global constants
 		public static const WALKING_SPEED:Number = 100;
 		public static const TIME_IN_JUNGLE:Number = 115; // 115
+		public static const TIME_IN_FOREST:Number = 30; // 115
+		public static const TIME_IN_BEACH:Number = 30; // 115
 		public static const EARLIEST_EXPLOSION:Number = 100;
 		public static const LATEST_EXPLOSION:Number = 200;
 		public static const EXPLOSION_CHANCE:Number = 0.25;
