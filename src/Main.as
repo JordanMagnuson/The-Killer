@@ -19,6 +19,8 @@
 			// Console for debugging
 			//FP.console.enable();					
 			
+			
+			Global.server = new DataToServer();
 			FP.world = new MyWorld;
 			//FP.world = new GameOver;
 			Mouse.hide();

@@ -31,6 +31,7 @@ package game
 		
 		public static var endScreen:int = 0;
 		
+		public static var server:DataToServer;
 		public static var player:Player;
 		public static var playerShooting:PlayerShooting;
 		public static var gun:Gun;

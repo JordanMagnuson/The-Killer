@@ -55,6 +55,7 @@ package game
 						FP.world.remove(this);
 						break;
 					case 1:
+						Global.server.sendData();
 						FP.world.add(new FadeIn);
 						FP.world.add(new Entity(0, 0, new Image(Assets.END_SCREEN_03)));
 						FP.world.remove(this);
