@@ -67,7 +67,7 @@ package game
 		
 		override public function update():void
 		{
-			//trace(Global.gun.image.angle);
+			trace(Global.gun.image.angle);
 			
 			if (Input.mousePressed && !Global.shotFired)
 			{
@@ -78,7 +78,7 @@ package game
 				Global.playSounds = false;
 				
 				// Merciful shot?
-				if (Global.gun.image.angle > 8 && Global.gun.image.angle < 348)
+				if (Global.gun.image.angle > 15 && Global.gun.image.angle < 340)
 				{
 					trace('mercy shot');
 					Global.mercifulShot = true;

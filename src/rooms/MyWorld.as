@@ -161,7 +161,7 @@ package rooms
 		{
 		//	trace('Global.playSounds: ' + Global.playSounds);
 		
-			trace('time: ' + Global.timeCounter.timePassed);
+			//trace('time: ' + Global.timeCounter.timePassed);
 			
 			// Testing
 			if (Input.pressed(Key.F12))
