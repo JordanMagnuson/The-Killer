@@ -38,6 +38,7 @@ package game
 			graphic = image;	
 			graphic.scrollX = 0;
 			graphic.scrollY = 0;			
+			(FP.world as MyWorld).time = 'sunset';
 			if ((FP.world as MyWorld).soundController)
 				(FP.world as MyWorld).soundController.startNight();
 		}

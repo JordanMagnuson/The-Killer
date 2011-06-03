@@ -105,6 +105,8 @@ package
 		
 		public function fadeComplete():void
 		{
+			trace('sc fade complete');
+			trace('time of day: ' + (FP.world as MyWorld).time);
 			inProcess = false;
 			
 			if (fadingOut)

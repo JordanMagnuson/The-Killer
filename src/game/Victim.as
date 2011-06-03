@@ -175,6 +175,8 @@ package game
 		
 		public function stop():void
 		{
+			if (sndWalkFast.playing)
+				sndWalkFast.stop();			
 			walking = false;
 			stoppingAlarm.active = false;
 		}
@@ -211,7 +213,7 @@ package game
 			spritemap.play('stumble');
 			stumbling = true;
 			
-			var vol:Number = 0.3 + 0.2 * FP.random;
+			var vol:Number = 0.5 + 0.5 * FP.random;
 			sndWalkFast.play(vol);
 		}
 		

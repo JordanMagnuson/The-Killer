@@ -71,7 +71,7 @@ package game
 			super.update();
 			if (Global.playSounds && walking && !sndWalking.playing)
 			{
-				sndWalking.loop(0.6);
+				sndWalking.loop(1);
 			}
 			
 			if (Input.check("X"))
@@ -138,6 +138,8 @@ package game
 			{
 				walking = false;
 				spritemap.play("stand");
+				if (sndWalking.playing)
+					sndWalking.stop();
 			}
 			
 			if (Input.released("X"))

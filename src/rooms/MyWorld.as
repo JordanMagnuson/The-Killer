@@ -112,6 +112,7 @@ package rooms
 			// Night-day cycle
 			//add(new Day(this, false));
 			add(new Night(this, false));
+			time = 'night';
 			//var night:Night;
 			//add(night = new Night(this));
 			//night.image.alpha = 1;
@@ -187,16 +188,16 @@ package rooms
 			}			
 			
 
-			//if (Input.pressed(Key.C))
- 			//{
-				//trace('c presesd');
-				//this.changeLocation();
-			//}
-			//else if (Input.pressed(Key.N))
- 			//{
-				//trace('n presesd');
-				//advanceTime();
-			//}			
+			if (Input.pressed(Key.C))
+ 			{
+				trace('c presesd');
+				this.changeLocation();
+			}
+			else if (Input.pressed(Key.N))
+ 			{
+				trace('n presesd');
+				advanceTime();
+			}			
 			
 			// Update entities
 			super.update();
