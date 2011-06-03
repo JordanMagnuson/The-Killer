@@ -227,14 +227,14 @@ package rooms
 				changeLocation();
 				Global.stillInJungle = false;
 			}
-			else if (Global.locationChanges == 1 && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE + Global.TIME_IN_FOREST)
+			else if (Global.locationChanges == 1 && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE + Global.MAX_TIME_IN_FOREST)
 			{
-				trace('change out of forest');
+				trace('exceeded max time in forest - change out');
 				changeLocation();
 			}			
-			else if (Global.locationChanges == 2 && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE + Global.TIME_IN_FOREST + Global.TIME_IN_BEACH)
+			else if (Global.locationChanges == 2 && Global.timeCounter.timePassed >= Global.TIME_IN_JUNGLE + Global.MAX_TIME_IN_FOREST + Global.MAX_TIME_IN_BEACH)
 			{
-				trace('change out of beach');
+				trace('exceeded max time in beach - change out');
 				changeLocation();
 			}				
 			
@@ -342,7 +342,9 @@ package rooms
 		 */
 		public function changeLocation(newLocation:Location = null):void
 		{
+			trace('change location');
 			trace('location changes: ' + Global.locationChanges);
+			trace('time: ' + Global.timeCounter.timePassed);
 			
 			// First few location changes are deteremined
 			switch (Global.locationChanges)
@@ -397,7 +399,7 @@ package rooms
 			//trace('Slope: ' + location.creationTimeSlope);
 			changeLocationAlarm.reset(CHANGE_LOCATION_TIME);
 			
-			if (Global.locationChanges == 0)
+			if (Global.locationChanges == 0 && Global.timeCounter.timePassed < Global.TIME_IN_JUNGLE)
 			{
 				trace('too early to change out of jungle');
 				return;

@@ -20,7 +20,7 @@ package game.forest
 		/**
 		 * Sound
 		 */
-		[Embed(source='../../../assets/sounds.swf', symbol='stream.wav')] private const SND_RIVER:Class;
+		[Embed(source='../../../assets/killer_sounds.swf', symbol='stream_30_loop_7138.wav')] private const SND_RIVER:Class;
 		public var sndRiver:Sfx = new Sfx(SND_RIVER);
 		public var fadeIn:SfxFader = new SfxFader(sndRiver);
 		public var fadeOut:SfxFader = new SfxFader(sndRiver, destroy);	

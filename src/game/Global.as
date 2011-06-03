@@ -6,11 +6,19 @@ package game
 	 */
 	public class Global
 	{
+		public static const MUSIC_WHILE_WALKING:Boolean = false;
+		
 		// Global constants
+		// Day-evening-night cycle = 95 seconds
 		public static const WALKING_SPEED:Number = 100;
 		public static const TIME_IN_JUNGLE:Number = 115; // 115
-		public static const TIME_IN_FOREST:Number = 30; // 115
-		public static const TIME_IN_BEACH:Number = 30; // 115
+		public static const TIME_IN_FOREST:Number = 30; // 30
+		public static const TIME_IN_BEACH:Number = 30; // 30
+		
+		public static const MAX_TIME_IN_FOREST:Number = 90;
+		public static const MAX_TIME_IN_BEACH:Number = 90;
+		
+		
 		public static const EARLIEST_EXPLOSION:Number = 100;
 		public static const LATEST_EXPLOSION:Number = 175;
 		public static const EXPLOSION_CHANCE:Number = 0.25;

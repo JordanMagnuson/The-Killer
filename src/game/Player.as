@@ -35,6 +35,9 @@ package game
 		[Embed(source='../../assets/sounds.swf', symbol='walking.wav')] private const SND_WALKING:Class;
 		public var sndWalking:Sfx = new Sfx(SND_WALKING);			
 		
+		[Embed(source='../../assets/killer_sounds.swf', symbol='push_01_50941.wav')] private const SND_PUSH:Class;
+		public var sndPush:Sfx = new Sfx(SND_PUSH);
+		
 		public function Player() 
 		{
 			// Graphic
@@ -68,7 +71,7 @@ package game
 			super.update();
 			if (Global.playSounds && walking && !sndWalking.playing)
 			{
-				sndWalking.loop(0.5);
+				sndWalking.loop(0.6);
 			}
 			
 			if (Input.check("X"))
@@ -81,10 +84,13 @@ package game
 				if (!Global.startedWalking)
 				{
 					Global.timeCounter.started = true;
-					Global.playSounds = false;
 					//(FP.world as MyWorld).soundController.currentSound.stop();
 					//FP.world.remove((FP.world as MyWorld).soundController);
-					(FP.world as MyWorld).music.loop();
+					if (Global.MUSIC_WHILE_WALKING)
+					{
+						Global.playSounds = false;
+						(FP.world as MyWorld).music.loop();
+					}
 					standingPush();
 					Global.startedWalking = true;
 					walking = false;
@@ -147,11 +153,16 @@ package game
 					FP.world.add(Global.playerShooting = new PlayerShooting);
 					Global.playerShooting.x = x;
 					Global.playerShooting.y = y;
-					FP.world.add((FP.world as MyWorld).soundController = new SoundController((FP.world as MyWorld).location));
-					//if ((FP.world as MyWorld).time == 'night')
-						//(FP.world as MyWorld).soundController.startNight();
-					(FP.world as MyWorld).music.stop();
-					Global.playSounds = true;
+					
+					if (Global.MUSIC_WHILE_WALKING)
+					{
+						FP.world.add((FP.world as MyWorld).soundController = new SoundController((FP.world as MyWorld).location));
+						//if ((FP.world as MyWorld).time == 'night')
+							//(FP.world as MyWorld).soundController.startNight();
+						(FP.world as MyWorld).music.stop();
+						Global.playSounds = true;						
+					}
+					sndWalking.stop();
 					FP.world.remove(this);
 					
 					
@@ -170,6 +181,8 @@ package game
 		
 		public function standingPush():void
 		{
+			var vol:Number = 0.3 + 0.2 * FP.random;
+			sndPush.play(vol);
 			spritemap.play('standing_push');
 			Global.victim.stumbleAlarm.reset(Global.victim.STUMBLE_TIME);
 		}
@@ -177,6 +190,8 @@ package game
 		public function push():void
 		{
 			trace('push');
+			var vol:Number = 0.3 + 0.2 * FP.random;
+			sndPush.play(vol);
 			spritemap.play('push');
 			Global.victim.stumbleAlarm.reset(Global.victim.STUMBLE_TIME);			
 		}

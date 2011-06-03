@@ -15,11 +15,15 @@ package game.jungle
 		/**
 		 * Sound
 		 */
-		[Embed(source='../../../assets/jungle_sounds.swf', symbol='jungle_night_sounds')] private const NIGHT_SOUND:Class;	
+		//[Embed(source='../../../assets/jungle_sounds.swf', symbol='jungle_night_loop_106973.wav')] private const NIGHT_SOUND:Class;	
+		//[Embed(source='../../../assets/jungle_sounds.swf', symbol='jungle_day_1_minute_34348.wav')] private const DAY_SOUND:Class;
+		
+		[Embed(source='../../../assets/jungle_sounds.swf', symbol='jungle_day_1_minute_34348.wav')] private const DAY_SOUND:Class;
+		[Embed(source='../../../assets/jungle_sounds.swf', symbol='jungle_night_106973.wav')] private const NIGHT_SOUND:Class;
 		
 		public function Jungle() 
 		{
-			super(NIGHT_SOUND, NIGHT_SOUND, 0.6, 0.4);
+			super(DAY_SOUND, NIGHT_SOUND, 0.6, 0.4);
 			type = 'jungle';     
 		}
 		

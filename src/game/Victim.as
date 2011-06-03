@@ -44,10 +44,16 @@ package game
 		public var fading:Boolean = false;
 		
 		/**
-		 * Player graphic
+		 * Graphic
 		 */
 		[Embed(source='../../assets/victim.png')] private const VICTIM:Class;
 		public var spritemap:Spritemap = new Spritemap(VICTIM, 20, 20);	
+		
+		/**
+		 * Sound
+		 */
+		[Embed(source = '../../assets/killer_sounds.swf', symbol = 'walk_fast_15562_modified.wav')] private const SND_WALK_FAST:Class;
+		public var sndWalkFast:Sfx = new Sfx(SND_WALK_FAST);
 				
 		
 		public function Victim() 
@@ -204,6 +210,9 @@ package game
 			//Global.WALKING_SPEED *= 0.5;
 			spritemap.play('stumble');
 			stumbling = true;
+			
+			var vol:Number = 0.3 + 0.2 * FP.random;
+			sndWalkFast.play(vol);
 		}
 		
 		public function waitToFade():void

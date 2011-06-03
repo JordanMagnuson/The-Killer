@@ -41,7 +41,7 @@ package game
 		override public function added():void
 		{
 			spritemap.play('explode');
-			sndExplosion.play(0.8);
+			sndExplosion.play(0.9);
 		}
 		
 		override public function update():void

@@ -98,12 +98,12 @@ package game.beach
 				// Night sounds
 				if ((FP.world as MyWorld).time == 'night')
 				{
-					if (creationNumber < 0.05 && !sndGullsRandom.playing)
-					{
-						sndGullsRandom = FP.choose(sndGulls01, sndGulls02, sndGulls03);
-						sndGullsRandom.play(vol, pan);
-					}					
-					else if (creationNumber < 0.15 && !sndWind.playing)
+					//if (creationNumber < 0.05 && !sndGullsRandom.playing)
+					//{
+						//sndGullsRandom = FP.choose(sndGulls01, sndGulls02, sndGulls03);
+						//sndGullsRandom.play(vol, pan);
+					//}					
+					if (creationNumber < 0.15 && !sndWind.playing)
 					{
 						sndWind.play(vol, pan);
 					}		

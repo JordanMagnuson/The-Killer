@@ -51,17 +51,27 @@ package
 		
 		public function stopSounds():void
 		{
-			Global.playSounds = false;
-			if (!inProcess && !fadingOut)
+			if (!fadingOut)
 			{
+				trace('stopping sounds');
 				fadingOut = true;
-				trace('stop sounds going');
+				if (inProcess) fader.fadeTo(0, 0.01);
 				if (newSound) newSound.stop();
-				fader.fadeTo(0, 3);
+				if (currentSound) currentSound.stop();
+			}
+			
+			//Global.playSounds = false;
+			//if (!inProcess && !fadingOut)
+			//{
+				//fadingOut = true;
+				//fader.a
+				//trace('stop sounds going');
+				//if (newSound) newSound.stop();
+				//fader.fadeTo(0, 3);
 				//if (currentSound) currentSound.stop();
 //				if (fader) removeTween(fader);
 				//FP.world.remove(this);
-			}
+			//}
 		}
 		
 		public function changeLocation(newLocation:Location):void
