@@ -188,16 +188,16 @@ package rooms
 			}			
 			
 
-			if (Input.pressed(Key.C))
- 			{
-				trace('c presesd');
-				this.changeLocation();
-			}
-			else if (Input.pressed(Key.N))
- 			{
-				trace('n presesd');
-				advanceTime();
-			}			
+			//if (Input.pressed(Key.C))
+ 			//{
+				//trace('c presesd');
+				//this.changeLocation();
+			//}
+			//else if (Input.pressed(Key.N))
+ 			//{
+				//trace('n presesd');
+				//advanceTime();
+			//}			
 			
 			// Update entities
 			super.update();
