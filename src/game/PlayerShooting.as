@@ -22,6 +22,7 @@ package game
 		public var kneelAlarm:Alarm;
 		
 		public var playMusicAlarm:Alarm = new Alarm(0.00001, playMusic);
+		public var fadeInMusicAlarm:Alarm = new Alarm(5, fadeMusicIn);
 		
 		public var killVictimAlarm:Alarm = new Alarm(0.00001, killVictim);
 		
@@ -89,8 +90,11 @@ package game
 				else 
 				{
 					// Play music
-					playMusicAlarm.start();
-				
+					if (Global.MUSIC_WHILE_WALKING)
+						playMusicAlarm.start();
+					//else
+						//addTween(fadeInMusicAlarm, true);
+						
 					killVictimAlarm.start();				
 				}
 				
@@ -119,8 +123,11 @@ package game
 			FP.world.add(new DeadUnderground);
 			
 			// Start music back up
-			(FP.world as MyWorld).music.play(0);
-			(FP.world as MyWorld).musicFader.fadeTo(1, 10);
+			if (Global.MUSIC_WHILE_WALKING)
+			{
+				(FP.world as MyWorld).music.play(0);
+				(FP.world as MyWorld).musicFader.fadeTo(1, 10);
+			}
 			
 			// Fade items (trees, etc.)
 			fadeItems(10);
@@ -136,6 +143,11 @@ package game
 		public function playMusic():void
 		{
 			(FP.world as MyWorld).musicEnd.play();			
+		}
+		
+		public function fadeMusicIn():void
+		{
+			(FP.world as MyWorld).fadeMusicIn(10);
 		}
 		
 		public function killVictim():void

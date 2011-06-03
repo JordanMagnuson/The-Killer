@@ -9,7 +9,7 @@ package game
 	 */
 	public class Global
 	{
-		public static const MUSIC_WHILE_WALKING:Boolean = false;
+		public static var MUSIC_WHILE_WALKING:Boolean = false;
 		
 		// Global constants
 		// Day-evening-night cycle = 95 seconds
@@ -25,6 +25,10 @@ package game
 		public static var timeInJungle:Number = MIN_TIME_IN_JUNGLE + FP.random * (MAX_TIME_IN_JUNGLE - MIN_TIME_IN_JUNGLE);
 		public static var timeInForest:Number = MIN_TIME_IN_FOREST + FP.random * (MAX_TIME_IN_FOREST - MIN_TIME_IN_FOREST);
 		public static var timeInBeach:Number = MIN_TIME_IN_BEACH + FP.random * (MAX_TIME_IN_BEACH - MIN_TIME_IN_BEACH);
+		
+		//public static var timeInJungle:Number = 90;
+		//public static var timeInForest:Number = 90;
+		//public static var timeInBeach:Number = 90;	
 		
 		
 		public static const EARLIEST_EXPLOSION:Number = 100;

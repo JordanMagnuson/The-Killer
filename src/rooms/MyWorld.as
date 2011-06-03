@@ -7,7 +7,9 @@ package rooms
 	import game.jungle.StartingScene;
 	import game.plains.Plains;
 	import game.snow.Snow;
+	import game.textReachedFields;
 	import net.flashpunk.Entity;
+	import net.flashpunk.Screen;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.tweens.misc.Alarm;
 	import net.flashpunk.tweens.sound.Fader;
@@ -18,6 +20,7 @@ package rooms
 	import net.flashpunk.utils.Key;
 	import game.forest.Forest;
 	import game.desert.Desert;
+	import flash.ui.Mouse;
 	
 	public class MyWorld extends World
 	{
@@ -85,6 +88,13 @@ package rooms
 		
 		public function MyWorld()      
 		{
+			// Reset screen
+			FP.height = 200;
+			FP.width = 300;
+			FP.screen = new Screen;
+			FP.screen.scale = 2;
+			//FP.screen.update();
+			
 			// World size
 			width = 300;
 			height = 200;		
@@ -149,7 +159,8 @@ package rooms
 		}
 		
 		override public function begin():void
-		{
+		{	
+			Mouse.hide();
 			addTween(musicFader);
 			
 			trace('time in jungle: ' + Global.timeInJungle);
@@ -187,13 +198,17 @@ package rooms
 				trace('explosion canceled');
 			}			
 			
+			if (Input.pressed(Key.F7))
+ 			{
+				explode();
+			}
 
-			//if (Input.pressed(Key.C))
- 			//{
-				//trace('c presesd');
-				//this.changeLocation();
-			//}
-			//else if (Input.pressed(Key.N))
+			if (Input.pressed(Key.F6))
+ 			{
+				trace('c presesd');
+				this.changeLocation();
+			}
+			//if (Input.pressed(Key.N))
  			//{
 				//trace('n presesd');
 				//advanceTime();
@@ -271,12 +286,25 @@ package rooms
 			add(new FallingCameraGuide());
 		}
 		
-		public function fadeAllItemsAfterExplosion():void
+		public function fadeMusicIn(duration:Number = 10):void
 		{
-			startFallingCameraAlarm = new Alarm(13, startFallingCamera);
-			addTween(startFallingCameraAlarm, true);
 			music.play(0);
-			musicFader.fadeTo(1, 10);
+			musicFader.fadeTo(1, duration);
+		}
+		
+		public function fadeAllItemsAfterExplosion():void
+		{	
+			if (Global.MUSIC_WHILE_WALKING)
+			{
+				music.play(0);
+				musicFader.fadeTo(1, 10);
+				startFallingCameraAlarm = new Alarm(13, startFallingCamera);
+			}
+			else
+			{
+				startFallingCameraAlarm = new Alarm(8, startFallingCamera);
+			}
+			addTween(startFallingCameraAlarm, true);
 			var itemList:Array = [];
 			getClass(Item, itemList);		
 			for each (var i:Item in itemList)
@@ -394,6 +422,8 @@ package rooms
 		public function reachedPlains():void
 		{
 			trace('reached plains');
+			if (Global.player.walking)
+				add(new textReachedFields);
 			Global.reachedPlains = true;
 		}
 		

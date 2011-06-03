@@ -178,12 +178,13 @@ package game
 					//playerDying.y = y;
 					//FP.world.remove(this);
 				}
-			}
+			} 
 		}
 		
 		public function standingPush():void
 		{
-			sndPush.play(0.5);
+			if (Global.playSounds)
+				sndPush.play(0.5);
 			spritemap.play('standing_push');
 			Global.victim.stumbleAlarm.reset(Global.victim.STUMBLE_TIME);
 		}

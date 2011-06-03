@@ -47,6 +47,31 @@ package
 				trace("Error saving play data to server.");
 			}
 		}
+		
+		public function sendMusicChoice():void
+		{
+			var request:URLRequest = new URLRequest("http://www.gametrekking.com/my-games/cambodia/the-killer/save-data");
+			request.method = URLRequestMethod.POST;
+							
+			var variables:URLVariables = new URLVariables();
+
+			variables.music = 0;
+			variables.ambient = 0;
+			if (Global.MUSIC_WHILE_WALKING)
+				variables.music = 1;
+			else
+				variables.ambient = 1;
+			request.data = variables;
+							
+			var loader:URLLoader = new URLLoader(request);
+			loader.addEventListener(Event.COMPLETE, onComplete);
+			loader.dataFormat = "VARIABLES";
+			try {
+				loader.load(request);
+			} catch (e:Error) {
+				trace("Error saving play data to server.");
+			}
+		}		
 						
 				
 		public function onComplete (event:Event):void{

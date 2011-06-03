@@ -90,11 +90,11 @@ package game.forest
 					{
 						sndOwl.play(vol, pan);
 					}
-					else if (creationNumber < 0.2 && !sndWolf.playing)
-					{
-						sndWolf.play(vol, pan);
-					}
-					else if (creationNumber < 0.3 && !sndCreaking.playing)
+					//else if (creationNumber < 0.2 && !sndWolf.playing)
+					//{
+						//sndWolf.play(vol, pan);
+					//}
+					else if (creationNumber < 0.2 && !sndCreaking.playing)
 					{
 						sndCreaking.play(vol, pan);
 					}
@@ -114,10 +114,10 @@ package game.forest
 					{
 						sndOwl.play(vol, pan);				
 					}
-					else if (creationNumber < 0.03 && !sndWolf.playing)
-					{
-						sndWolf.play(vol, pan);
-					}
+					//else if (creationNumber < 0.03 && !sndWolf.playing)
+					//{
+						//sndWolf.play(vol, pan);
+					//}
 					else if (creationNumber < 0.15 && !sndCreaking.playing)
 					{
 						sndCreaking.play(vol, pan);

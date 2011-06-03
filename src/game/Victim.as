@@ -214,7 +214,8 @@ package game
 			stumbling = true;
 			
 			var vol:Number = 0.5 + 0.5 * FP.random;
-			sndWalkFast.play(vol);
+			if (Global.playSounds)
+				sndWalkFast.play(vol);
 		}
 		
 		public function waitToFade():void
