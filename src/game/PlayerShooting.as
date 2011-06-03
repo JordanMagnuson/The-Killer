@@ -67,7 +67,7 @@ package game
 		
 		override public function update():void
 		{
-			trace(Global.gun.image.angle);
+			//trace(Global.gun.image.angle);
 			
 			if (Input.mousePressed && !Global.shotFired)
 			{

@@ -181,8 +181,7 @@ package game
 		
 		public function standingPush():void
 		{
-			var vol:Number = 0.3 + 0.2 * FP.random;
-			sndPush.play(vol);
+			sndPush.play(0.5);
 			spritemap.play('standing_push');
 			Global.victim.stumbleAlarm.reset(Global.victim.STUMBLE_TIME);
 		}
@@ -194,6 +193,11 @@ package game
 			sndPush.play(vol);
 			spritemap.play('push');
 			Global.victim.stumbleAlarm.reset(Global.victim.STUMBLE_TIME);			
+		}
+		
+		override public function removed():void
+		{
+			sndWalking.stop();
 		}
 		
 	}

@@ -21,6 +21,8 @@ package
 		public var inProcess:Boolean = false;
 		
 		public var fadingOut:Boolean = false;
+		
+		public var time:String;
 
 		
 		public function SoundController(location:Location) 
@@ -118,7 +120,7 @@ package
 				trace('catching up with day');
 				startDay();
 			}
-			else if (currentSound != (FP.world as MyWorld).location.nightSound)
+			else if ((FP.world as MyWorld).time != 'day' && currentSound != (FP.world as MyWorld).location.nightSound)
 			{
 				trace('catching up with night');
 				startNight();
@@ -135,6 +137,7 @@ package
 				return;
 				
 			trace('start night');
+			time = 'night';
 			if (inProcess == true)
 			{
 				trace('in process');
@@ -156,6 +159,7 @@ package
 				return;
 				
 			trace('start day');
+			time = 'day';
 			if (inProcess == true)
 			{
 				trace('in process');

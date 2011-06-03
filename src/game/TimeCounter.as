@@ -13,6 +13,8 @@ package game
 		public var minutesPassed:Number = 0;
 		public var secondsPassed:Number = 0;
 		
+		public var timePassedSinceLastLocationChange:Number = 0;
+		
 		public var started:Boolean = false;
 		
 		public function TimeCounter() 
@@ -24,9 +26,10 @@ package game
 		{
 			if (started)
 			{
+				timePassedSinceLastLocationChange += FP.elapsed;
 				timePassed += FP.elapsed;
-				minutesPassed = Math.floor(timePassed / 60);
-				secondsPassed = Math.floor(timePassed % 60);
+				//minutesPassed = Math.floor(timePassed / 60);
+				//secondsPassed = Math.floor(timePassed % 60);
 				super.update();
 			}
 		}
