@@ -86,7 +86,7 @@ package game.forest
 				// Night sounds
 				if ((FP.world as MyWorld).time == 'night')
 				{
-					if (creationNumber < 0.1 && !sndOwl.playing)
+					if (creationNumber < 0.05 && !sndOwl.playing)
 					{
 						sndOwl.play(vol, pan);
 					}
@@ -94,7 +94,7 @@ package game.forest
 					//{
 						//sndWolf.play(vol, pan);
 					//}
-					else if (creationNumber < 0.2 && !sndCreaking.playing)
+					else if (creationNumber < 0.15 && !sndCreaking.playing)
 					{
 						sndCreaking.play(vol, pan);
 					}
@@ -110,7 +110,7 @@ package game.forest
 					{
 						sndCicadas.play(vol, pan);
 					}					
-					else if (creationNumber < 0.02 && !sndOwl.playing)
+					else if (creationNumber < 0.015 && !sndOwl.playing)
 					{
 						sndOwl.play(vol, pan);				
 					}

@@ -30,8 +30,8 @@ package rooms
 			FP.screen.color = Colors.BLACK;
 			add(new Entity(0, 0, bgImage));
 			
-			add(new MusicSelectorButton(84, 128));
-			add(new AmbientSelectorButton(342, 128));
+			add(new MusicSelectorButton(81, 128));
+			add(new AmbientSelectorButton(341, 128));
 		}
 		
 	}

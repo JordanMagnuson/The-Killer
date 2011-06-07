@@ -75,8 +75,9 @@ package rooms
 		 * Music
 		 */
 		public var music:Sfx = new Sfx(Assets.MUSIC);			
-		public var musicFader:SfxFader = new SfxFader(music);
+		public var musicFader:SfxFader = new SfxFader(music, musicFaderComplete);
 		public var musicEnd:Sfx = new Sfx(Assets.MUSIC_END);
+		public var musicStarted:Boolean = false;
 		
 		public var reachedPlainsAlarm:Alarm = new Alarm(15, reachedPlains);
 		
@@ -141,7 +142,7 @@ package rooms
 			
 			// Start of game changes
 			location.gameStart(this);
-			location.creationTime = 2;
+			location.creationTime = 0.6;
 			location.creationTimeAlarm.reset(0.1);
 			
 			// Explosion?
@@ -179,6 +180,11 @@ package rooms
 		
 			//trace('time: ' + Global.timeCounter.timePassed);
 			
+			//if (Global.timeCounter.timePassed >= Global.START_MUSIC_IN && !musicStarted)
+			//{
+				//fadeMusicIn(Global.MUSIC_IN_DURATION);				
+			//}
+			
 			// Testing
 			if (Input.pressed(Key.F12))
 			{
@@ -208,6 +214,18 @@ package rooms
 				trace('c presesd');
 				this.changeLocation();
 			}
+
+			if (Input.pressed(Key.F5) && !musicStarted)
+			{
+				trace('music fading in');
+				Global.playSounds = false;
+				Global.fadeSounds = true;
+				musicStarted = true;
+				soundController.fadeOut();
+				music.loop(0);
+				musicFader.fadeTo(1, Global.MUSIC_IN_DURATION);
+			}			
+			
 			//if (Input.pressed(Key.N))
  			//{
 				//trace('n presesd');
@@ -288,8 +306,18 @@ package rooms
 		
 		public function fadeMusicIn(duration:Number = 10):void
 		{
-			music.play(0);
-			musicFader.fadeTo(1, duration);
+				trace('music fading in');
+				soundController.fadeOut();
+				Global.playSounds = false;
+				Global.fadeSounds = true;
+				music.loop(0);
+				musicFader.fadeTo(1, duration);
+		}
+		
+		public function musicFaderComplete():void
+		{
+			trace('music fader complete');
+			Global.fadeSounds = false;
 		}
 		
 		public function fadeAllItemsAfterExplosion():void
@@ -387,7 +415,9 @@ package rooms
 				case 0: 
 					newLocation = new Forest; 	// Forest
 					break;
-				case 1:
+				case 1:			
+					if (Global.MUSIC_WHILE_WALKING)
+						fadeMusicIn(Global.MUSIC_IN_DURATION);			
 					newLocation = new Beach;	// Beach
 					break;
 				case 2:

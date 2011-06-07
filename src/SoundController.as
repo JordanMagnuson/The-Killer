@@ -18,7 +18,9 @@ package
 		public var currentSound:Sfx;
 		public var newSound:Sfx;
 		public var fader:SfxFader;
+		public var newSoundFader:SfxFader
 		public var inProcess:Boolean = false;
+		public var soundsStopped:Boolean = false;
 		
 		public var fadingOut:Boolean = false;
 		
@@ -45,21 +47,38 @@ package
 		override public function update():void
 		{
 			//trace('play sounds? ' + Global.playSounds)
-			if (!Global.playSounds)
+			if (!Global.playSounds && !Global.fadeSounds && !soundsStopped)
 				stopSounds();
 			super.update();
 			//trace('in process: ' + inProcess);
 		}
 		
+		public function fadeOut():void
+		{
+			if (inProcess)
+			{
+				trace("sc in process - can't fade");
+				return;
+			}
+			
+			fader.fadeTo(0, Global.MUSIC_IN_DURATION/2);
+			//if (newSound)
+				//newSound.stop();
+			fadingOut = true;
+			
+		}		
+		
 		public function stopSounds():void
 		{
-			if (!fadingOut)
+			trace('sc stop sounds immediately');
+			if (!Global.fadeSounds)
 			{
 				trace('stopping sounds');
 				fadingOut = true;
 				if (inProcess) fader.fadeTo(0, 0.01);
 				if (newSound) newSound.stop();
 				if (currentSound) currentSound.stop();
+				soundsStopped = true;
 			}
 			
 			//Global.playSounds = false;
@@ -79,7 +98,7 @@ package
 		public function changeLocation(newLocation:Location):void
 		{
 			trace('change location');
-			if (fadingOut)
+			if (Global.fadeSounds)
 				return;
 			if (inProcess == true)
 			{
@@ -109,7 +128,10 @@ package
 			trace('time of day: ' + (FP.world as MyWorld).time);
 			inProcess = false;
 			
-			if (fadingOut)
+			if (Global.fadeSounds && !fadingOut)
+				fadeOut();
+			
+			if (Global.fadeSounds)
 				return;
 				
 			if (!Global.playSounds)
@@ -135,7 +157,7 @@ package
 		
 		public function startNight():void
 		{
-			if (fadingOut)
+			if (Global.fadeSounds)
 				return;
 				
 			trace('start night');
@@ -157,7 +179,7 @@ package
 		
 		public function startDay():void
 		{
-			if (fadingOut)
+			if (Global.fadeSounds)
 				return;
 				
 			trace('start day');

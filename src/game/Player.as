@@ -73,6 +73,10 @@ package game
 			{
 				sndWalking.loop(1);
 			}
+			else if (!Global.playSounds)
+			{
+				sndWalking.stop();
+			}
 			
 			if (Input.check("X"))
 			{
@@ -86,11 +90,12 @@ package game
 					Global.timeCounter.started = true;
 					//(FP.world as MyWorld).soundController.currentSound.stop();
 					//FP.world.remove((FP.world as MyWorld).soundController);
-					if (Global.MUSIC_WHILE_WALKING)
-					{
-						Global.playSounds = false;
-						(FP.world as MyWorld).music.loop();
-					}
+					
+					//if (Global.MUSIC_WHILE_WALKING)
+					//{
+						//Global.playSounds = false;
+						//(FP.world as MyWorld).music.loop();
+					//}
 					standingPush();
 					Global.startedWalking = true;
 					walking = false;
@@ -164,6 +169,7 @@ package game
 						(FP.world as MyWorld).music.stop();
 						Global.playSounds = true;						
 					}
+					Global.fadeSounds = false;
 					sndWalking.stop();
 					FP.world.remove(this);
 					
@@ -193,7 +199,8 @@ package game
 		{
 			trace('push');
 			var vol:Number = 0.3 + 0.2 * FP.random;
-			sndPush.play(vol);
+			if (Global.playSounds)
+				sndPush.play(vol);
 			spritemap.play('push');
 			Global.victim.stumbleAlarm.reset(Global.victim.STUMBLE_TIME);			
 		}

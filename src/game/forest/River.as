@@ -59,7 +59,7 @@ package game.forest
 			super.update();
 			spriteMap.play("flow");
 			
-			if (Global.playSounds)
+			if (Global.playSounds || Global.fadeSounds)
 			{
 				sndRiver.pan = FP.scale(x, 0, FP.screen.width, -1, 1);
 				if (x <= 0 && !fadeStarted)
@@ -74,8 +74,18 @@ package game.forest
 					sndRiver.volume = FP.scale(x, 40, FP.screen.width, 0.7, 0.1);
 				}
 			}
+			//else if (!Global.playSounds && !Global.fadeSounds)
+			//{
+				//fadeStarted = true;
+				//fadeOut = new SfxFader(sndRiver);
+				//addTween(fadeOut);
+				//fadeOut.fadeTo(0, 5);
+			//}
 			else
+			{
 				sndRiver.volume = 0;
+			}
+			
 		}
 		
 		override public function offScreenAction():void
