@@ -26,7 +26,7 @@ package game
 		public static var timeInForest:Number = MIN_TIME_IN_FOREST + FP.random * (MAX_TIME_IN_FOREST - MIN_TIME_IN_FOREST);
 		public static var timeInBeach:Number = MIN_TIME_IN_BEACH + FP.random * (MAX_TIME_IN_BEACH - MIN_TIME_IN_BEACH);
 		
-		public static var START_MUSIC_IN:Number = timeInJungle + timeInForest;
+		public static var START_MUSIC_IN:Number = timeInJungle + timeInForest + 10;
 		public static var MUSIC_IN_DURATION:Number = 30;		
 		
 		//public static var timeInJungle:Number = 90;

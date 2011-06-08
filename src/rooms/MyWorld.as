@@ -180,10 +180,11 @@ package rooms
 		
 			//trace('time: ' + Global.timeCounter.timePassed);
 			
-			//if (Global.timeCounter.timePassed >= Global.START_MUSIC_IN && !musicStarted)
-			//{
-				//fadeMusicIn(Global.MUSIC_IN_DURATION);				
-			//}
+			if (Global.player.walking && Global.timeCounter.timePassed >= Global.START_MUSIC_IN)
+			{
+				if (Global.MUSIC_WHILE_WALKING && !musicStarted)
+					fadeMusicIn(Global.MUSIC_IN_DURATION);	
+			}
 			
 			// Testing
 			if (Input.pressed(Key.F12))
@@ -192,6 +193,7 @@ package rooms
 				Global.explosionTime = Global.EARLIEST_EXPLOSION + FP.random * (Global.LATEST_EXPLOSION - Global.EARLIEST_EXPLOSION);
 				//Global.explosionTime = 2;
 				explosionAlarm = new Alarm(Global.explosionTime, explode);
+				explosionAlarm.active = true;
 				addTween(explosionAlarm, true);
 				trace('explosion set to: ' + Global.explosionTime);
 			}
@@ -200,6 +202,7 @@ package rooms
 				Global.shouldExplode = false;
 				Global.explosionTime = 5000;
 				//Global.explosionTime = 2;
+				if (explosionAlarm) explosionAlarm.active = false;
 				if (explosionAlarm) removeTween(explosionAlarm);
 				trace('explosion canceled');
 			}			
@@ -259,18 +262,18 @@ package rooms
 			}
 			
 			// Time to swtich out of jungle?
-			if (Global.locationChanges == 0 && Global.timeCounter.timePassedSinceLastLocationChange >= Global.timeInJungle)
+			if (Global.player.walking && Global.locationChanges == 0 && Global.timeCounter.timePassedSinceLastLocationChange >= Global.timeInJungle)
 			{
 				trace('exceeded time in jungle - change out');
 				changeLocation(); 
 				Global.stillInJungle = false;
 			}
-			else if (Global.locationChanges == 1 && Global.timeCounter.timePassedSinceLastLocationChange >= Global.timeInForest)
+			else if (Global.player.walking && Global.locationChanges == 1 && Global.timeCounter.timePassedSinceLastLocationChange >= Global.timeInForest)
 			{
 				trace('exceeded time in forest - change out');
 				changeLocation();
 			}			
-			else if (Global.locationChanges == 2 && Global.timeCounter.timePassedSinceLastLocationChange >= Global.timeInBeach)
+			else if (Global.player.walking && Global.locationChanges == 2 && Global.timeCounter.timePassedSinceLastLocationChange >= Global.timeInBeach)
 			{
 				trace('exceeded time in beach - change out');
 				changeLocation();
@@ -307,6 +310,7 @@ package rooms
 		public function fadeMusicIn(duration:Number = 10):void
 		{
 				trace('music fading in');
+				musicStarted = true;
 				soundController.fadeOut();
 				Global.playSounds = false;
 				Global.fadeSounds = true;
@@ -325,6 +329,7 @@ package rooms
 			if (Global.MUSIC_WHILE_WALKING)
 			{
 				music.play(0);
+				musicStarted = true;
 				musicFader.fadeTo(1, 10);
 				startFallingCameraAlarm = new Alarm(13, startFallingCamera);
 			}
@@ -416,8 +421,8 @@ package rooms
 					newLocation = new Forest; 	// Forest
 					break;
 				case 1:			
-					if (Global.MUSIC_WHILE_WALKING)
-						fadeMusicIn(Global.MUSIC_IN_DURATION);			
+					//if (Global.MUSIC_WHILE_WALKING)
+						//fadeMusicIn(Global.MUSIC_IN_DURATION);			
 					newLocation = new Beach;	// Beach
 					break;
 				case 2:

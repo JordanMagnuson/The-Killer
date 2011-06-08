@@ -1,5 +1,6 @@
 package  
 {
+	import flash.events.SecurityErrorEvent;
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	import flash.net.URLVariables;
@@ -39,6 +40,7 @@ package
 			request.data = variables;
 							
 			var loader:URLLoader = new URLLoader(request);
+			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 			loader.addEventListener(Event.COMPLETE, onComplete);
 			loader.dataFormat = "VARIABLES";
 			try {
@@ -64,15 +66,17 @@ package
 			request.data = variables;
 							
 			var loader:URLLoader = new URLLoader(request);
-			loader.addEventListener(Event.COMPLETE, onComplete);
-			loader.dataFormat = "VARIABLES";
+			loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR, securityErrorHandler);
 			try {
 				loader.load(request);
 			} catch (e:Error) {
 				trace("Error saving play data to server.");
 			}
 		}		
-						
+				
+        private function securityErrorHandler(event:SecurityErrorEvent):void {
+            trace("securityErrorHandler: " + event);
+        }		
 				
 		public function onComplete (event:Event):void{
 			//statusTxt1.text = event.target.data;
