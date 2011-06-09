@@ -46,7 +46,7 @@ http://creativecommons.org/about/licenses/
 SPECIAL THANKS
 ------------------------------------------------------------------------
 
-Special thanks to everyone who helped me test and refine this game, including:
+Special thanks to everyone who helped me test and refine this creation, including:
 
 Jeremy Apthorp
 Simon Braunstein

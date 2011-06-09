@@ -13,14 +13,16 @@ package game
 		
 		// Global constants
 		// Day-evening-night cycle = 95 seconds
+		// If music starts from beginning, we want walk to take between 3:00 and 3:50
 		public static const WALKING_SPEED:Number = 100;
-		public static const MIN_TIME_IN_JUNGLE:Number = 90; // 60
-		public static const MIN_TIME_IN_FOREST:Number = 45; // 45
-		public static const MIN_TIME_IN_BEACH:Number = 90; 	// 45
-		
-		public static const MAX_TIME_IN_JUNGLE:Number = 120;	// 90
-		public static const MAX_TIME_IN_FOREST:Number = 60;		// 90
-		public static const MAX_TIME_IN_BEACH:Number = 120;		// 90
+		// Music fade in at beach times: 90, 60, 60
+		public static const MIN_TIME_IN_JUNGLE:Number = 80; // 60	
+		public static const MIN_TIME_IN_FOREST:Number = 50; // 45
+		public static const MIN_TIME_IN_BEACH:Number = 50; 	// 45
+		// Music fade in at beach times: 120, 60, 120
+		public static const MAX_TIME_IN_JUNGLE:Number = 100;	// 90
+		public static const MAX_TIME_IN_FOREST:Number = 65;		// 90
+		public static const MAX_TIME_IN_BEACH:Number = 65;		// 90
 		
 		public static var timeInJungle:Number = MIN_TIME_IN_JUNGLE + FP.random * (MAX_TIME_IN_JUNGLE - MIN_TIME_IN_JUNGLE);
 		public static var timeInForest:Number = MIN_TIME_IN_FOREST + FP.random * (MAX_TIME_IN_FOREST - MIN_TIME_IN_FOREST);
@@ -34,8 +36,8 @@ package game
 		//public static var timeInBeach:Number = 90;	
 		
 		
-		public static const EARLIEST_EXPLOSION:Number = 100;
-		public static const LATEST_EXPLOSION:Number = 210;
+		public static const EARLIEST_EXPLOSION:Number = timeInJungle;
+		public static const LATEST_EXPLOSION:Number = timeInJungle + timeInForest + timeInBeach;
 		public static const EXPLOSION_CHANCE:Number = 0.25;
 		
 		// Global variables

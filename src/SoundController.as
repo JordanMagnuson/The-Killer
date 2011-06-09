@@ -53,7 +53,7 @@ package
 			//trace('in process: ' + inProcess);
 		}
 		
-		public function fadeOut():void
+		public function fadeOut(duration:Number = 15):void
 		{
 			if (inProcess)
 			{
@@ -61,7 +61,9 @@ package
 				return;
 			}
 			
-			fader.fadeTo(0, Global.MUSIC_IN_DURATION/2);
+			Global.fadeSounds = true;
+			Global.playSounds = false;
+			fader.fadeTo(0, duration);
 			//if (newSound)
 				//newSound.stop();
 			fadingOut = true;
@@ -98,7 +100,7 @@ package
 		public function changeLocation(newLocation:Location):void
 		{
 			trace('change location');
-			if (Global.fadeSounds)
+			if (!Global.playSounds || Global.fadeSounds)
 				return;
 			if (inProcess == true)
 			{
@@ -127,6 +129,12 @@ package
 			trace('sc fade complete');
 			trace('time of day: ' + (FP.world as MyWorld).time);
 			inProcess = false;
+			
+			if (fadingOut)
+			{
+				fadingOut = false;
+				Global.fadeSounds = false;
+			}			
 			
 			if (Global.fadeSounds && !fadingOut)
 				fadeOut();
@@ -157,7 +165,7 @@ package
 		
 		public function startNight():void
 		{
-			if (Global.fadeSounds)
+			if (!Global.playSounds || Global.fadeSounds)
 				return;
 				
 			trace('start night');
@@ -179,7 +187,7 @@ package
 		
 		public function startDay():void
 		{
-			if (Global.fadeSounds)
+			if (!Global.playSounds || Global.fadeSounds)
 				return;
 				
 			trace('start day');

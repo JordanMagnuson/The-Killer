@@ -91,11 +91,13 @@ package game
 					//(FP.world as MyWorld).soundController.currentSound.stop();
 					//FP.world.remove((FP.world as MyWorld).soundController);
 					
-					//if (Global.MUSIC_WHILE_WALKING)
-					//{
+					if (Global.MUSIC_WHILE_WALKING)
+					{
+						(FP.world as MyWorld).soundController.fadeOut(5);
+						//(FP.world as MyWorld).fadeMusicIn(10);
 						//Global.playSounds = false;
-						//(FP.world as MyWorld).music.loop();
-					//}
+						(FP.world as MyWorld).music.loop();
+					}
 					standingPush();
 					Global.startedWalking = true;
 					walking = false;

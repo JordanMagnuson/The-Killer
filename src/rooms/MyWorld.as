@@ -180,11 +180,11 @@ package rooms
 		
 			//trace('time: ' + Global.timeCounter.timePassed);
 			
-			if (Global.player.walking && Global.timeCounter.timePassed >= Global.START_MUSIC_IN)
-			{
-				if (Global.MUSIC_WHILE_WALKING && !musicStarted)
-					fadeMusicIn(Global.MUSIC_IN_DURATION);	
-			}
+			//if (Global.player.walking && Global.timeCounter.timePassed >= Global.START_MUSIC_IN)
+			//{
+				//if (Global.MUSIC_WHILE_WALKING && !musicStarted)
+					//fadeMusicIn(Global.MUSIC_IN_DURATION);	
+			//}
 			
 			// Testing
 			if (Input.pressed(Key.F12))
@@ -311,7 +311,7 @@ package rooms
 		{
 				trace('music fading in');
 				musicStarted = true;
-				soundController.fadeOut();
+				soundController.fadeOut(duration);
 				Global.playSounds = false;
 				Global.fadeSounds = true;
 				music.loop(0);
