@@ -20,7 +20,8 @@ Notes:
 - The game was built on top of one of my previous efforts (Walk or Die)
   in a terribly haphazard way. If you're interested in the basic
   code behind the procedural world generation or day/night cycle, I
-  recommend that you download the Walk or Die code separately. 
+  recommend that you download the Walk or Die code separately from
+  https://github.com/JordanMagnuson/Walk-or-Die .
 
 - The FlashPunk library is covered by its own license, which can be found 
   in the flashpunk directory.
