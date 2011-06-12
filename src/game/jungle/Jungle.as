@@ -47,7 +47,8 @@ package game.jungle
 		
 		override public function added():void
 		{
-			FP.world.add(new StartingScene);			
+			if (!Global.startedWalking)
+				FP.world.add(new StartingScene);			
 		}
 		
 		override public function createItem():void
