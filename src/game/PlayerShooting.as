@@ -92,8 +92,8 @@ package game
 					// Play music
 					if (Global.MUSIC_WHILE_WALKING)
 						playMusicAlarm.start();
-					//else
-						//addTween(fadeInMusicAlarm, true);
+					else
+						addTween(fadeInMusicAlarm, true);
 						
 					killVictimAlarm.start();				
 				}
@@ -123,7 +123,8 @@ package game
 			FP.world.add(new DeadUnderground);
 			
 			// Start music back up
-			if (Global.MUSIC_WHILE_WALKING)
+			//if (Global.MUSIC_WHILE_WALKING)
+			if (true)
 			{
 				(FP.world as MyWorld).music.play(0);
 				(FP.world as MyWorld).musicFader.fadeTo(1, 10);

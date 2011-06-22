@@ -326,7 +326,8 @@ package rooms
 		
 		public function fadeAllItemsAfterExplosion():void
 		{	
-			if (Global.MUSIC_WHILE_WALKING)
+			//if (Global.MUSIC_WHILE_WALKING)
+			if (true)
 			{
 				music.play(0);
 				musicStarted = true;
