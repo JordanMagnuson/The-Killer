@@ -146,8 +146,8 @@ package rooms
 			location.creationTimeAlarm.reset(0.1);
 			
 			// Explosion?
-			if (FP.random <= Global.EXPLOSION_CHANCE)
-				Global.shouldExplode = true;
+			//if (FP.random <= Global.EXPLOSION_CHANCE)
+				//Global.shouldExplode = true;
 			if (Global.shouldExplode)
 			{
 				Global.explosionTime = Global.EARLIEST_EXPLOSION + FP.random * (Global.LATEST_EXPLOSION - Global.EARLIEST_EXPLOSION);
