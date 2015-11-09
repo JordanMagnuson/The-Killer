@@ -4,6 +4,9 @@
 	import rooms.*;
 	import game.*;
 	import flash.ui.Mouse;
+	import flash.display.StageScaleMode;
+	import flash.geom.Rectangle;
+	import flash.display.StageDisplayState;
 	
 	public class Main extends Engine
 	{
@@ -28,6 +31,10 @@
 		
 		override public function init():void
 		{
+			// Full screen
+			//FP.stage.scaleMode = StageScaleMode.SHOW_ALL;
+			//FP.stage.fullScreenSourceRect = new Rectangle(0, 0, 600, 400);
+			//FP.stage.displayState = StageDisplayState.FULL_SCREEN;				
 			super.init();
 		}
 	}
