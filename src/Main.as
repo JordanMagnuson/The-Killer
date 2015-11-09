@@ -4,9 +4,9 @@
 	import rooms.*;
 	import game.*;
 	import flash.ui.Mouse;
-	import flash.display.StageScaleMode;
-	import flash.geom.Rectangle;
-	import flash.display.StageDisplayState;
+	//import flash.display.StageScaleMode;
+	//import flash.geom.Rectangle;
+	//import flash.display.StageDisplayState;
 	
 	public class Main extends Engine
 	{
