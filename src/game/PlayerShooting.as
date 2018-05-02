@@ -9,6 +9,7 @@ package game
 	import rooms.GameOver;
 	import rooms.MyWorld;
 	import net.flashpunk.Sfx;
+	import game.forest.River;
 	
 	/**
 	 * ...
@@ -77,6 +78,15 @@ package game
 				
 				// Stop sounds
 				Global.playSounds = false;
+				var riverList:Array = [];
+				FP.world.getClass(River, riverList);
+				for each (var r:River in riverList)
+				{
+					if (r.sndRiver.playing)
+					{
+						r.sndRiver.stop();
+					}
+				}				
 				
 				// Merciful shot?
 				if (Global.gun.image.angle > 15 && Global.gun.image.angle < 340)

@@ -61,7 +61,7 @@ package game.forest
 			
 			if (Global.playSounds || Global.fadeSounds)
 			{
-				sndRiver.pan = FP.scale(x, 0, FP.screen.width, -1, 1);
+				sndRiver.pan = FP.scale(x, 0, FP.width, -1, 1);
 				if (x <= 0 && !fadeStarted)
 				{
 					trace('start river fade out');
@@ -71,7 +71,7 @@ package game.forest
 				}
 				if (!fadeStarted)
 				{
-					sndRiver.volume = FP.scale(x, 40, FP.screen.width, 0.7, 0.1);
+					sndRiver.volume = FP.scale(x, 40, FP.width, 0.7, 0.1);
 				}
 			}
 			//else if (!Global.playSounds && !Global.fadeSounds)
