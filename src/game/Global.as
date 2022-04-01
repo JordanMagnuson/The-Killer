@@ -24,9 +24,9 @@ package game
 		public static const MAX_TIME_IN_FOREST:Number = 65;		// 90
 		public static const MAX_TIME_IN_BEACH:Number = 65;		// 90
 		
-		public static var timeInJungle:Number = MIN_TIME_IN_JUNGLE + FP.random * (MAX_TIME_IN_JUNGLE - MIN_TIME_IN_JUNGLE);
-		public static var timeInForest:Number = MIN_TIME_IN_FOREST + FP.random * (MAX_TIME_IN_FOREST - MIN_TIME_IN_FOREST);
-		public static var timeInBeach:Number = MIN_TIME_IN_BEACH + FP.random * (MAX_TIME_IN_BEACH - MIN_TIME_IN_BEACH);
+		public static var timeInJungle:Number = 45;	//45
+		public static var timeInForest:Number = 30;	//30
+		public static var timeInBeach:Number = 30;	//30
 		
 		public static var START_MUSIC_IN:Number = timeInJungle + timeInForest + 10;
 		public static var MUSIC_IN_DURATION:Number = 30;		
